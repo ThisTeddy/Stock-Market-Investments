@@ -42,6 +42,11 @@ cloudinary.config(
 # SECURITY
 
 # ==================================================
+ALLOWED_HOSTS = [
+    "xcoin-ufhb.onrender.com",
+    "localhost",
+    "127.0.0.1",
+]
 
 SECRET_KEY = config(
 "SECRET_KEY",
