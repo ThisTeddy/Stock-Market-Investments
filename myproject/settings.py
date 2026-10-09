@@ -43,7 +43,7 @@ cloudinary.config(
 
 # ==================================================
 ALLOWED_HOSTS = [
-    "xcoin-ufhb.onrender.com",
+    "stock-market-investments.onrender.com",
     "localhost",
     "127.0.0.1",
 ]
