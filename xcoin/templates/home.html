@@ -1,1873 +1,1404 @@
 {% load static %}
 {% load humanize %}
+
 <!DOCTYPE html>
-<html lang="en" x-data="{ mobileMenu:false }">
-
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
+    <title>Stock Market Investment | Invest Smarter</title>
+    <meta name="description" content="Invest smarter across stocks, crypto, ETFs, forex and commodities with Stock Market Investment.">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-<title>XCoin | Invest Smarter</title>
+    <!-- Alpine -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-<script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Swiper -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    >
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-<script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0B3B8F',
+                        primary2: '#124EA8',
+                        accent: '#E53935',
+                        ink: '#07152E',
+                        soft: '#F5F8FC'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    },
+                    boxShadow: {
+                        soft: '0 8px 30px rgba(7, 21, 46, 0.07)',
+                        card: '0 4px 20px rgba(7, 21, 46, 0.06)'
+                    }
+                }
+            }
+        }
+    </script>
 
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #07152E;
+            background: #ffffff;
+        }
 
-<style>
+        .hero-grid {
+            background-image:
+                linear-gradient(rgba(11, 59, 143, .035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(11, 59, 143, .035) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
 
-*{
-    font-family:Inter,sans-serif;
-}
+        .ticker-track {
+            animation: ticker 30s linear infinite;
+        }
 
-html{
-    scroll-behavior:smooth;
-}
+        @keyframes ticker {
+            from {
+                transform: translateX(0);
+            }
 
+            to {
+                transform: translateX(-50%);
+            }
+        }
 
-@keyframes ticker{
+        .signal-buy {
+            color: #15803d;
+            background: #f0fdf4;
+        }
 
-0%{
+        .signal-sell {
+            color: #dc2626;
+            background: #fef2f2;
+        }
 
-transform:translateX(0);
+        .signal-hold {
+            color: #b45309;
+            background: #fffbeb;
+        }
 
-}
-
-100%{
-
-transform:translateX(-50%);
-
-}
-
-}
-body{
-    background:#070707;
-    color:white;
-}
-
-.glass{
-    background:rgba(255,255,255,.05);
-    backdrop-filter:blur(20px);
-    border:1px solid rgba(255,255,255,.08);
-}
-
-.hero-glow{
-    position:absolute;
-    width:320px;
-    height:320px;
-    border-radius:9999px;
-    filter:blur(110px);
-    opacity:.25;
-}
-
-</style>
-<!--Start of Tawk.to Script-->
-<script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/6a6e2954a16bfc1d4f1a85fd/1juv52svt';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
-</script>
-<!--End of Tawk.to Script-->
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
 </head>
 
-<body>
+<body class="antialiased">
 
-<!-- Background -->
-
-<div class="fixed inset-0 -z-10 overflow-hidden">
-
-    <div class="hero-glow bg-red-600 top-0 -left-24"></div>
-
-    <div class="hero-glow bg-red-700 bottom-0 -right-24"></div>
-
-</div>
-
+<!-- ========================================================= -->
 <!-- NAVBAR -->
+<!-- ========================================================= -->
 
-<header class="sticky top-0 z-50 border-b border-zinc-900/70 backdrop-blur-xl bg-[#070707]/80">
+<header class="fixed top-0 left-0 right-0 z-50 border-b border-slate-200/70 bg-white/90 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="h-[66px] flex items-center justify-between">
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <!-- Logo -->
+            <a href="/" class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center shadow-sm">
+                    <span class="text-white font-bold text-sm">SM</span>
+                </div>
 
-        <div class="h-16 flex items-center justify-between">
-
-            <a href="/"
-               class="text-2xl font-black">
-
-                <span class="text-red-600">X</span>Coin
-
+                <div>
+                    <div class="font-bold text-[14px] tracking-tight text-ink">
+                        Stock Market
+                    </div>
+                    <div class="text-[10px] text-slate-500 -mt-0.5">
+                        Investment
+                    </div>
+                </div>
             </a>
 
-            <!-- Desktop -->
-
-            <nav class="hidden lg:flex items-center gap-8 text-sm">
-
-                <a href="#features" class="hover:text-red-500 transition">Features</a>
-
-                <a href="#markets" class="hover:text-red-500 transition">Markets</a>
-
-                <a href="#plans" class="hover:text-red-500 transition">Plans</a>
-
-                <a href="#faq" class="hover:text-red-500 transition">FAQ</a>
-
+            <!-- Desktop Nav -->
+            <nav class="hidden lg:flex items-center gap-7 text-[13px] font-medium text-slate-600">
+                <a href="#features" class="hover:text-primary transition">Features</a>
+                <a href="#markets" class="hover:text-primary transition">Markets</a>
+                <a href="#plans" class="hover:text-primary transition">Plans</a>
+                <a href="#faq" class="hover:text-primary transition">FAQ</a>
             </nav>
 
-            <div class="hidden lg:flex items-center gap-3">
-
-                <a href="{% url 'login' %}"
-                   class="px-5 py-2.5 rounded-xl glass">
-
+            <!-- Actions -->
+            <div class="flex items-center gap-2.5">
+                <a
+                    href="{% url 'login' %}"
+                    class="hidden sm:block text-[13px] font-semibold text-slate-700 hover:text-primary transition px-3 py-2"
+                >
                     Login
-
                 </a>
 
-                <a href="{% url 'register' %}"
-                   class="px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 transition">
-
+                <a
+                    href="{% url 'register' %}"
+                    class="bg-primary hover:bg-primary2 text-white text-[12px] font-semibold px-4 py-2.5 rounded-lg transition shadow-sm"
+                >
                     Create Account
-
                 </a>
-
             </div>
-
-            <!-- Mobile -->
-
-            <button @click="mobileMenu=true"
-                    class="lg:hidden">
-
-                <i data-lucide="menu" class="w-7 h-7"></i>
-
-            </button>
-
         </div>
-
     </div>
-
 </header>
 
-<!-- MOBILE MENU -->
 
-<div x-show="mobileMenu"
-     x-transition
-     class="fixed inset-0 bg-black/70 z-40"
-     @click="mobileMenu=false"></div>
-
-<aside
-    x-show="mobileMenu"
-    x-transition
-    class="fixed left-0 top-0 w-72 h-screen bg-[#0b0b0b] border-r border-zinc-800 z-50 p-6">
-
-    <div class="flex justify-between items-center">
-
-        <h2 class="text-2xl font-black">
-
-            <span class="text-red-600">X</span>Coin
-
-        </h2>
-
-        <button @click="mobileMenu=false">
-
-            <i data-lucide="x"></i>
-
-        </button>
-
-    </div>
-
-    <div class="mt-10 space-y-5">
-
-        <a href="#features" class="block">Features</a>
-
-        <a href="#markets" class="block">Markets</a>
-
-        <a href="#plans" class="block">Investment Plans</a>
-
-        <a href="#faq" class="block">FAQ</a>
-
-        <hr class="border-zinc-800">
-
-        <a href="{% url 'login' %}"
-           class="block text-center glass rounded-xl py-3">
-
-            Login
-
-        </a>
-
-        <a href="{% url 'register' %}"
-           class="block text-center bg-red-600 rounded-xl py-3">
-
-            Create Account
-
-        </a>
-
-    </div>
-
-</aside>
-
+<!-- ========================================================= -->
 <!-- HERO -->
+<!-- ========================================================= -->
 
-<section class="max-w-7xl mx-auto px-4 sm:px-6 pt-12 pb-16">
+<section class="relative pt-[108px] pb-14 lg:pt-[126px] lg:pb-16 overflow-hidden hero-grid">
 
-    <div class="grid lg:grid-cols-2 gap-10 items-center">
+    <div class="absolute top-20 left-1/4 w-72 h-72 bg-blue-100/50 rounded-full blur-3xl"></div>
+    <div class="absolute right-0 top-32 w-80 h-80 bg-red-50/40 rounded-full blur-3xl"></div>
 
-        <!-- LEFT -->
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <div>
+        <div class="grid lg:grid-cols-[.92fr_1.08fr] gap-10 lg:gap-14 items-center">
 
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-xs tracking-widest uppercase">
+            <!-- Hero Copy -->
+            <div>
 
-                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                <div class="inline-flex items-center gap-2 px-2.5 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm mb-5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                    <span class="text-[11px] font-semibold text-slate-600">
+                        Trusted by investors worldwide
+                    </span>
+                </div>
 
-                Trusted Worldwide
+                <h1 class="text-[40px] sm:text-[44px] lg:text-[50px] leading-[1.04] font-extrabold tracking-[-0.04em] text-ink max-w-xl">
+                    Invest smarter.
+                    <span class="text-primary">Build wealth.</span>
+                </h1>
+
+                <p class="mt-4 text-[14px] lg:text-[15px] leading-6 text-slate-600 max-w-lg">
+                    Access stocks, crypto, ETFs, forex and commodities from one
+                    powerful investment platform built for modern investors.
+                </p>
+
+                <div class="flex flex-wrap gap-2.5 mt-6">
+                    <a
+                        href="{% url 'register' %}"
+                        class="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary2 text-white text-[13px] font-semibold px-5 py-3 rounded-lg transition shadow-sm"
+                    >
+                        Start Investing
+                        <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                    </a>
+
+                    <a
+                        href="#markets"
+                        class="inline-flex items-center justify-center gap-2 bg-white border border-slate-200 hover:border-slate-300 text-ink text-[13px] font-semibold px-5 py-3 rounded-lg transition"
+                    >
+                        Explore Markets
+                    </a>
+                </div>
+
+                <!-- Stats -->
+                <div class="flex items-center gap-7 mt-7 pt-5 border-t border-slate-200 max-w-lg">
+                    <div>
+                        <div class="text-lg font-bold text-ink">120+</div>
+                        <div class="text-[11px] text-slate-500 mt-0.5">Assets</div>
+                    </div>
+
+                    <div class="w-px h-7 bg-slate-200"></div>
+
+                    <div>
+                        <div class="text-lg font-bold text-ink">150K+</div>
+                        <div class="text-[11px] text-slate-500 mt-0.5">Investors</div>
+                    </div>
+
+                    <div class="w-px h-7 bg-slate-200"></div>
+
+                    <div>
+                        <div class="text-lg font-bold text-ink">24/7</div>
+                        <div class="text-[11px] text-slate-500 mt-0.5">Market Access</div>
+                    </div>
+                </div>
 
             </div>
 
-            <h1 class="mt-6 text-4xl sm:text-5xl lg:text-7xl font-black leading-tight">
 
-                Invest in
+            <!-- Dashboard Mockup -->
+            <div class="relative">
 
-                <span class="text-red-600">
+                <div class="absolute -inset-4 bg-blue-100/40 blur-3xl rounded-full"></div>
 
-                    Crypto,
+                <div class="relative bg-white border border-slate-200 rounded-2xl shadow-soft overflow-hidden">
 
-                </span>
+                    <!-- Dashboard Header -->
+                    <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
+                        <div>
+                            <p class="text-[10px] text-slate-400 font-medium">
+                                Portfolio balance
+                            </p>
+                            <div class="flex items-center gap-2 mt-1">
+                                <span class="text-xl font-bold text-ink">
+                                    $84,620.42
+                                </span>
+                                <span class="text-[10px] font-semibold text-green-600 bg-green-50 px-1.5 py-1 rounded">
+                                    +8.42%
+                                </span>
+                            </div>
+                        </div>
 
-                Stocks &
+                        <button class="w-8 h-8 rounded-lg border border-slate-200 flex items-center justify-center">
+                            <i data-lucide="more-horizontal" class="w-4 h-4 text-slate-500"></i>
+                        </button>
+                    </div>
 
-                ETFs.
+                    <!-- Chart -->
+                    <div class="px-5 pt-5 pb-3">
 
-            </h1>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-[11px] text-slate-400">Portfolio performance</span>
+                            </div>
 
-            <p class="mt-6 text-zinc-400 leading-7 max-w-xl">
+                            <div class="flex gap-1">
+                                <span class="text-[9px] px-2 py-1 rounded bg-slate-100 text-slate-500">1D</span>
+                                <span class="text-[9px] px-2 py-1 rounded bg-primary text-white">1M</span>
+                                <span class="text-[9px] px-2 py-1 rounded bg-slate-100 text-slate-500">1Y</span>
+                            </div>
+                        </div>
 
-                Buy cryptocurrencies, stocks, ETFs, commodities and forex from one secure investment platform with real-time pricing and a seamless trading experience.
+                        <svg
+                            viewBox="0 0 700 230"
+                            class="w-full h-[190px]"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <defs>
+                                <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#0B3B8F" stop-opacity=".18"/>
+                                    <stop offset="100%" stop-color="#0B3B8F" stop-opacity="0"/>
+                                </linearGradient>
+                            </defs>
 
-            </p>
+                            <path
+                                d="M0 190
+                                C45 176 60 165 95 170
+                                C130 175 150 130 185 142
+                                C220 154 238 120 270 126
+                                C310 134 325 94 360 106
+                                C395 118 415 76 450 87
+                                C490 100 500 62 535 70
+                                C570 78 600 35 635 52
+                                C660 64 680 30 700 38
+                                V230 H0 Z"
+                                fill="url(#chartFill)"
+                            />
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-8">
+                            <path
+                                d="M0 190
+                                C45 176 60 165 95 170
+                                C130 175 150 130 185 142
+                                C220 154 238 120 270 126
+                                C310 134 325 94 360 106
+                                C395 118 415 76 450 87
+                                C490 100 500 62 535 70
+                                C570 78 600 35 635 52
+                                C660 64 680 30 700 38"
+                                stroke="#0B3B8F"
+                                stroke-width="3"
+                                stroke-linecap="round"
+                            />
+                        </svg>
 
-                <a href="{% url 'register' %}"
-                   class="h-12 rounded-xl bg-red-600 hover:bg-red-700 transition flex items-center justify-center font-semibold">
+                        <div class="flex justify-between text-[9px] text-slate-400 mt-1">
+                            <span>Sep 01</span>
+                            <span>Sep 15</span>
+                            <span>Oct 01</span>
+                        </div>
+                    </div>
 
-                    Create Account
+                    <!-- Holdings -->
+                    <div class="border-t border-slate-100 px-5 py-4">
 
-                </a>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-[11px] font-semibold text-ink">
+                                Top holdings
+                            </span>
+                            <span class="text-[10px] text-primary font-medium">
+                                View all
+                            </span>
+                        </div>
 
-                <a href="#markets"
-                   class="h-12 rounded-xl glass flex items-center justify-center">
+                        <div class="grid grid-cols-3 gap-2">
 
-                    Live Markets
+                            <div class="bg-slate-50 rounded-lg p-2.5">
+                                <div class="flex items-center gap-1.5">
+                                    <div class="w-6 h-6 rounded-md bg-orange-100 flex items-center justify-center text-[9px] font-bold text-orange-600">
+                                        BTC
+                                    </div>
+                                    <div>
+                                        <div class="text-[10px] font-semibold">Bitcoin</div>
+                                        <div class="text-[8px] text-slate-400">BTC</div>
+                                    </div>
+                                </div>
+                                <div class="text-[11px] font-bold mt-2">$18,240</div>
+                                <div class="text-[9px] text-green-600 mt-0.5">+4.82%</div>
+                            </div>
 
-                </a>
+                            <div class="bg-slate-50 rounded-lg p-2.5">
+                                <div class="flex items-center gap-1.5">
+                                    <div class="w-6 h-6 rounded-md bg-blue-100 flex items-center justify-center text-[9px] font-bold text-blue-600">
+                                        TS
+                                    </div>
+                                    <div>
+                                        <div class="text-[10px] font-semibold">Tesla</div>
+                                        <div class="text-[8px] text-slate-400">TSLA</div>
+                                    </div>
+                                </div>
+                                <div class="text-[11px] font-bold mt-2">$12,680</div>
+                                <div class="text-[9px] text-green-600 mt-0.5">+2.14%</div>
+                            </div>
 
-            </div>
+                            <div class="bg-slate-50 rounded-lg p-2.5">
+                                <div class="flex items-center gap-1.5">
+                                    <div class="w-6 h-6 rounded-md bg-purple-100 flex items-center justify-center text-[9px] font-bold text-purple-600">
+                                        AP
+                                    </div>
+                                    <div>
+                                        <div class="text-[10px] font-semibold">Apple</div>
+                                        <div class="text-[8px] text-slate-400">AAPL</div>
+                                    </div>
+                                </div>
+                                <div class="text-[11px] font-bold mt-2">$9,420</div>
+                                <div class="text-[9px] text-green-600 mt-0.5">+1.72%</div>
+                            </div>
 
-            <!-- Stats -->
-
-            <div class="grid grid-cols-2 gap-4 mt-10">
-
-                <div class="glass rounded-2xl p-4">
-
-                    <p class="text-zinc-500 text-sm">
-
-                        Assets
-
-                    </p>
-
-                    <h3 class="text-2xl font-black mt-2">
-
-                        120+
-
-                    </h3>
+                        </div>
+                    </div>
 
                 </div>
-
-                <div class="glass rounded-2xl p-4">
-
-                    <p class="text-zinc-500 text-sm">
-
-                        Users
-
-                    </p>
-
-                    <h3 class="text-2xl font-black mt-2">
-
-                        150K+
-
-                    </h3>
-
-                </div>
-
             </div>
 
         </div>
-
-       
-
     </div>
-
 </section>
-<section id="signals" class="py-24 bg-zinc-950">
 
-    <div class="max-w-7xl mx-auto px-4">
 
-        <div class="text-center mb-14">
+<!-- ========================================================= -->
+<!-- MARKET TICKER -->
+<!-- ========================================================= -->
 
-            <span class="inline-flex items-center px-4 py-2 rounded-full bg-red-600/10 text-red-500 font-semibold text-sm border border-red-600/20">
-
-                Live Trading Signals
-
-            </span>
-
-            <h2 class="text-4xl md:text-5xl font-black text-white mt-6">
-
-                AI & Analyst Market Signals
-
-            </h2>
-
-            <p class="mt-5 max-w-3xl mx-auto text-zinc-400 leading-8">
-
-                Receive professional market insights across crypto, stocks, forex and commodities.
-                Every signal includes entry price, target zones, stop loss and confidence score.
-
-            </p>
-
-        </div>
-
-        <div class="grid lg:grid-cols-3 gap-8">
-
-            <div class="glass rounded-3xl p-7 border border-green-500/20 hover:border-green-500 transition">
-
-                <div class="flex justify-between items-center">
-
-                    <div>
-
-                        <h3 class="text-white font-bold text-xl">
-                            Bitcoin
-                        </h3>
-
-                        <p class="text-zinc-500">
-                            BTC/USD
-                        </p>
-
-                    </div>
-
-                    <span class="px-3 py-1 rounded-full bg-green-500/10 text-green-500 font-semibold">
-
-                        BUY
-
-                    </span>
-
-                </div>
-
-                <div class="mt-8 space-y-4">
-
-                    <div class="flex justify-between">
-
-                        <span class="text-zinc-500">
-                            Entry
-                        </span>
-
-                        <span class="text-white">
-                            $118,200
-                        </span>
-
-                    </div>
-
-                    <div class="flex justify-between">
-
-                        <span class="text-zinc-500">
-                            Target
-                        </span>
-
-                        <span class="text-green-500">
-                            $123,500
-                        </span>
-
-                    </div>
-
-                    <div class="flex justify-between">
-
-                        <span class="text-zinc-500">
-                            Stop Loss
-                        </span>
-
-                        <span class="text-red-500">
-                            $115,900
-                        </span>
-
-                    </div>
-
-                </div>
-
-                <div class="mt-8">
-
-                    <div class="flex justify-between mb-2">
-
-                        <span class="text-zinc-500">
-
-                            Confidence
-
-                        </span>
-
-                        <span class="text-white">
-
-                            94%
-
-                        </span>
-
-                    </div>
-
-                    <div class="h-2 rounded-full bg-zinc-800">
-
-                        <div class="h-full rounded-full bg-green-500 w-[94%]"></div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="glass rounded-3xl p-7 border border-red-500/20 hover:border-red-500 transition">
-
-                <div class="flex justify-between items-center">
-
-                    <div>
-
-                        <h3 class="text-white font-bold text-xl">
-                            Tesla
-                        </h3>
-
-                        <p class="text-zinc-500">
-                            TSLA
-                        </p>
-
-                    </div>
-
-                    <span class="px-3 py-1 rounded-full bg-red-500/10 text-red-500 font-semibold">
-
-                        SELL
-
-                    </span>
-
-                </div>
-
-                <div class="mt-8 space-y-4">
-
-                    <div class="flex justify-between">
-
-                        <span class="text-zinc-500">
-
-                            Entry
-
-                        </span>
-
-                        <span class="text-white">
-
-                            $342.50
-
-                        </span>
-
-                    </div>
-
-                    <div class="flex justify-between">
-
-                        <span class="text-zinc-500">
-
-                            Target
-
-                        </span>
-
-                        <span class="text-green-500">
-
-                            $326.00
-
-                        </span>
-
-                    </div>
-
-                    <div class="flex justify-between">
-
-                        <span class="text-zinc-500">
-
-                            Stop Loss
-
-                        </span>
-
-                        <span class="text-red-500">
-
-                            $350.00
-
-                        </span>
-
-                    </div>
-
-                </div>
-
-                <div class="mt-8">
-
-                    <div class="flex justify-between mb-2">
-
-                        <span class="text-zinc-500">
-
-                            Confidence
-
-                        </span>
-
-                        <span class="text-white">
-
-                            88%
-
-                        </span>
-
-                    </div>
-
-                    <div class="h-2 rounded-full bg-zinc-800">
-
-                        <div class="h-full rounded-full bg-red-500 w-[88%]"></div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="glass rounded-3xl p-7 border border-yellow-500/20 hover:border-yellow-500 transition">
-
-                <div class="flex justify-between items-center">
-
-                    <div>
-
-                        <h3 class="text-white font-bold text-xl">
-                            Gold
-                        </h3>
-
-                        <p class="text-zinc-500">
-                            XAU/USD
-                        </p>
-
-                    </div>
-
-                    <span class="px-3 py-1 rounded-full bg-yellow-500/10 text-yellow-400 font-semibold">
-
-                        HOLD
-
-                    </span>
-
-                </div>
-
-                <div class="mt-8 space-y-4">
-
-                    <div class="flex justify-between">
-
-                        <span class="text-zinc-500">
-
-                            Current
-
-                        </span>
-
-                        <span class="text-white">
-
-                            $3,412
-
-                        </span>
-
-                    </div>
-
-                    <div class="flex justify-between">
-
-                        <span class="text-zinc-500">
-
-                            Resistance
-
-                        </span>
-
-                        <span class="text-white">
-
-                            $3,460
-
-                        </span>
-
-                    </div>
-
-                    <div class="flex justify-between">
-
-                        <span class="text-zinc-500">
-
-                            Support
-
-                        </span>
-
-                        <span class="text-white">
-
-                            $3,360
-
-                        </span>
-
-                    </div>
-
-                </div>
-
-                <div class="mt-8">
-
-                    <div class="flex justify-between mb-2">
-
-                        <span class="text-zinc-500">
-
-                            Confidence
-
-                        </span>
-
-                        <span class="text-white">
-
-                            81%
-
-                        </span>
-
-                    </div>
-
-                    <div class="h-2 rounded-full bg-zinc-800">
-
-                        <div class="h-full rounded-full bg-yellow-400 w-[81%]"></div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="text-center mt-14">
-
-            <a href="{% url 'register' %}"
-               class="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-red-600 hover:bg-red-700 text-white font-bold transition">
-
-                Unlock Premium Signals
-
-            </a>
-
-        </div>
-
-    </div>
-
-</section>
-<!-- ===================================== -->
-<!-- LIVE MARKET TICKER -->
-<!-- ===================================== -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-
-<section id="markets" class="py-20">
-
-    <div class="max-w-7xl mx-auto px-4">
-
-        <div class="text-center mb-12">
-
-            <h2 class="text-4xl md:text-5xl font-black text-white">
-                Live Markets
-            </h2>
-
-            <p class="text-zinc-400 mt-4 max-w-2xl mx-auto">
-                Trade cryptocurrencies, stocks, ETFs, commodities and forex from one platform.
-            </p>
-
-        </div>
+<section class="border-y border-slate-200 bg-white overflow-hidden">
+    <div class="ticker-track flex w-max">
 
         {% if assets %}
 
-        <div class="swiper marketSwiper">
+            {% for asset in assets %}
+            <a
+                href="{% url 'asset_detail' asset.id %}"
+                class="flex items-center gap-2.5 px-5 py-3 border-r border-slate-100 hover:bg-slate-50 transition"
+            >
 
-            <div class="swiper-wrapper">
+                {% if asset.logo %}
+                    <img
+                        src="{{ asset.logo.url }}"
+                        alt="{{ asset.name }}"
+                        class="w-5 h-5 rounded-full object-cover"
+                    >
+                {% else %}
+                    <div class="w-5 h-5 rounded-full bg-primary text-white flex items-center justify-center text-[8px] font-bold">
+                        {{ asset.symbol|slice:":1" }}
+                    </div>
+                {% endif %}
 
-                {% for asset in assets %}
+                <span class="text-[11px] font-semibold text-ink">
+                    {{ asset.symbol }}
+                </span>
 
-                <div class="swiper-slide">
+                <span class="text-[11px] text-slate-500">
+                    ${{ asset.current_price|floatformat:2|intcomma }}
+                </span>
 
-                    <a href="{% url 'asset_detail' asset.id %}"
-                       class="glass rounded-2xl p-5 flex items-center gap-4 hover:border-red-600 transition h-full">
-
-                        {% if asset.logo %}
-
-                        <img src="{{ asset.logo.url }}"
-                             class="w-12 h-12 rounded-full object-cover">
-
-                        {% else %}
-
-                        <div class="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center text-white font-bold">
-
-                            {{ asset.symbol|slice:":1" }}
-
-                        </div>
-
-                        {% endif %}
-
-                        <div class="flex-1">
-
-                            <h3 class="font-bold text-white">
-
-                                {{ asset.name }}
-
-                            </h3>
-
-                            <p class="text-zinc-500 text-sm">
-
-                                {{ asset.symbol }}
-
-                            </p>
-
-                        </div>
-
-                        <div class="text-right">
-
-                            <div class="font-bold text-white">
-
-                                ${{ asset.current_price|floatformat:2 }}
-
-                            </div>
-
-                            {% if asset.change >= 0 %}
-
-                            <div class="text-green-500 text-sm">
-
-                                ▲ {{ asset.change|floatformat:2 }}%
-
-                            </div>
-
-                            {% else %}
-
-                            <div class="text-red-500 text-sm">
-
-                                ▼ {{ asset.change|floatformat:2 }}%
-
-                            </div>
-
-                            {% endif %}
-
-                        </div>
-
-                    </a>
-
-                </div>
-
-                {% endfor %}
-
-            </div>
-
-        </div>
-
-        {% else %}
-
-        <div class="glass rounded-3xl py-16 text-center text-zinc-500">
-
-            No assets available.
-
-        </div>
+                <span class="text-[10px] font-semibold {% if asset.change >= 0 %}text-green-600{% else %}text-red-600{% endif %}">
+                    {% if asset.change >= 0 %}+{% endif %}{{ asset.change }}%
+                </span>
+            </a>
+            {% endfor %}
 
         {% endif %}
 
     </div>
-
 </section>
 
-<style>
 
-.marketSwiper{
-    overflow:hidden;
-    padding:10px 0;
-}
+<!-- ========================================================= -->
+<!-- FEATURES -->
+<!-- ========================================================= -->
 
-.marketSwiper .swiper-slide{
-    width:320px;
-    height:auto;
-}
+<section id="features" class="py-16 lg:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-@media(max-width:768px){
+        <div class="max-w-xl mb-9">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-primary">
+                Why choose us
+            </span>
 
-    .marketSwiper .swiper-slide{
-        width:270px;
-    }
-
-}
-
-</style>
-
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-<script>
-
-new Swiper(".marketSwiper",{
-
-    loop:true,
-
-    speed:5000,
-
-    allowTouchMove:true,
-
-    grabCursor:true,
-
-    autoplay:{
-        delay:0,
-        disableOnInteraction:false,
-    },
-
-    freeMode:true,
-
-    freeModeMomentum:false,
-
-    slidesPerView:"auto",
-
-    spaceBetween:20,
-
-});
-
-</script>
-
-
-<!-- ===================================== -->
-<!-- WHY CHOOSE XCOIN -->
-<!-- ===================================== -->
-
-<section id="features" class="py-20">
-
-<div class="max-w-7xl mx-auto px-4 sm:px-6">
-
-<div class="text-center max-w-3xl mx-auto">
-
-<span class="text-red-500 uppercase tracking-[0.35em] text-xs">
-
-WHY XCOIN
-
-</span>
-
-<h2 class="text-3xl sm:text-5xl font-black mt-4">
-
-Built for Modern Investors
-
-</h2>
-
-<p class="text-zinc-400 mt-6 leading-8">
-
-Trade global financial markets from one secure platform with institutional-grade security and lightning-fast execution.
-
-</p>
-
-</div>
-
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-14">
-
-<div class="glass rounded-3xl p-5 hover:border-red-600 transition">
-
-<div class="w-14 h-14 rounded-2xl bg-red-600/20 flex items-center justify-center">
-
-<i data-lucide="shield-check"></i>
-
-</div>
-
-<h3 class="text-xl font-bold mt-6">
-
-Bank-Level Security
-
-</h3>
-
-<p class="text-zinc-400 mt-3">
-
-Your funds and personal information are protected using advanced encryption.
-
-</p>
-
-</div>
-
-<div class="glass rounded-3xl p-5 hover:border-red-600 transition">
-
-<div class="w-14 h-14 rounded-2xl bg-red-600/20 flex items-center justify-center">
-
-<i data-lucide="zap"></i>
-
-</div>
-
-<h3 class="text-xl font-bold mt-6">
-
-Instant Trading
-
-</h3>
-
-<p class="text-zinc-400 mt-3">
-
-Buy and sell assets instantly with real-time pricing and execution.
-
-</p>
-
-</div>
-
-<div class="glass rounded-3xl p-5 hover:border-red-600 transition">
-
-<div class="w-14 h-14 rounded-2xl bg-red-600/20 flex items-center justify-center">
-
-<i data-lucide="globe"></i>
-
-</div>
-
-<h3 class="text-xl font-bold mt-6">
-
-Global Markets
-
-</h3>
-
-<p class="text-zinc-400 mt-3">
-
-Access cryptocurrencies, stocks, ETFs, commodities and forex from one account.
-
-</p>
-
-</div>
-
-<div class="glass rounded-3xl p-5 hover:border-red-600 transition">
-
-<div class="w-14 h-14 rounded-2xl bg-red-600/20 flex items-center justify-center">
-
-<i data-lucide="headset"></i>
-
-</div>
-
-<h3 class="text-xl font-bold mt-6">
-
-24/7 Support
-
-</h3>
-
-<p class="text-zinc-400 mt-3">
-
-Professional customer support available whenever you need assistance.
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-<!-- ===================================== -->
-<!-- INVESTMENT CATEGORIES -->
-<!-- ===================================== -->
-<section id="plans" class="py-24 bg-zinc-950">
-
-    <div class="max-w-7xl mx-auto px-4">
-
-        <div class="text-center mb-16">
-
-            <h2 class="text-4xl md:text-5xl font-black text-white">
-                Investment Plans
+            <h2 class="text-[30px] lg:text-[36px] leading-tight font-bold tracking-[-0.03em] mt-2 text-ink">
+                Everything you need to invest with confidence.
             </h2>
 
-            <p class="text-zinc-400 mt-4 max-w-2xl mx-auto">
-                Choose an investment plan that matches your financial goals.
+            <p class="text-[13px] leading-6 text-slate-500 mt-3">
+                Powerful investment tools designed to keep your portfolio
+                simple, accessible and under your control.
+            </p>
+        </div>
+
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+
+            <!-- Card -->
+            <div class="p-5 rounded-xl border border-slate-200 bg-white hover:shadow-card transition">
+                <div class="w-9 h-9 rounded-lg bg-blue-50 text-primary flex items-center justify-center mb-4">
+                    <i data-lucide="shield-check" class="w-4 h-4"></i>
+                </div>
+
+                <h3 class="text-[14px] font-bold text-ink">
+                    Bank-Level Security
+                </h3>
+
+                <p class="text-[12px] leading-5 text-slate-500 mt-2">
+                    Your account and investments are protected with modern
+                    security infrastructure.
+                </p>
+            </div>
+
+
+            <div class="p-5 rounded-xl border border-slate-200 bg-white hover:shadow-card transition">
+                <div class="w-9 h-9 rounded-lg bg-red-50 text-accent flex items-center justify-center mb-4">
+                    <i data-lucide="zap" class="w-4 h-4"></i>
+                </div>
+
+                <h3 class="text-[14px] font-bold text-ink">
+                    Instant Trading
+                </h3>
+
+                <p class="text-[12px] leading-5 text-slate-500 mt-2">
+                    Execute trades quickly and monitor your portfolio in
+                    real time.
+                </p>
+            </div>
+
+
+            <div class="p-5 rounded-xl border border-slate-200 bg-white hover:shadow-card transition">
+                <div class="w-9 h-9 rounded-lg bg-blue-50 text-primary flex items-center justify-center mb-4">
+                    <i data-lucide="globe-2" class="w-4 h-4"></i>
+                </div>
+
+                <h3 class="text-[14px] font-bold text-ink">
+                    Global Markets
+                </h3>
+
+                <p class="text-[12px] leading-5 text-slate-500 mt-2">
+                    Diversify across global stocks, crypto, ETFs, forex and
+                    commodities.
+                </p>
+            </div>
+
+
+            <div class="p-5 rounded-xl border border-slate-200 bg-white hover:shadow-card transition">
+                <div class="w-9 h-9 rounded-lg bg-red-50 text-accent flex items-center justify-center mb-4">
+                    <i data-lucide="headphones" class="w-4 h-4"></i>
+                </div>
+
+                <h3 class="text-[14px] font-bold text-ink">
+                    24/7 Support
+                </h3>
+
+                <p class="text-[12px] leading-5 text-slate-500 mt-2">
+                    Get assistance whenever you need it from our dedicated
+                    support team.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ========================================================= -->
+<!-- TRADING SIGNALS -->
+<!-- ========================================================= -->
+
+<section class="py-16 lg:py-20 bg-soft">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+
+            <div>
+                <span class="text-[11px] font-bold uppercase tracking-wider text-primary">
+                    Market intelligence
+                </span>
+
+                <h2 class="text-[30px] lg:text-[36px] font-bold tracking-[-0.03em] mt-2">
+                    Live Trading Signals
+                </h2>
+
+                <p class="text-[13px] text-slate-500 mt-2">
+                    AI-powered and analyst-backed market signals.
+                </p>
+            </div>
+
+            <a
+                href="{% url 'register' %}"
+                class="text-[12px] font-semibold text-primary hover:text-primary2"
+            >
+                Unlock premium signals →
+            </a>
+
+        </div>
+
+
+        <div class="grid md:grid-cols-3 gap-4">
+
+            <!-- Bitcoin -->
+            <div class="bg-white border border-slate-200 rounded-xl p-5">
+
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="text-[14px] font-bold">Bitcoin</div>
+                        <div class="text-[10px] text-slate-400 mt-0.5">BTC/USD</div>
+                    </div>
+
+                    <span class="signal-buy text-[9px] font-bold px-2 py-1 rounded-md">
+                        BUY
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-3 gap-2 mt-5">
+                    <div>
+                        <div class="text-[9px] text-slate-400">Entry</div>
+                        <div class="text-[11px] font-semibold mt-1">$62,420</div>
+                    </div>
+
+                    <div>
+                        <div class="text-[9px] text-slate-400">Target</div>
+                        <div class="text-[11px] font-semibold mt-1">$68,200</div>
+                    </div>
+
+                    <div>
+                        <div class="text-[9px] text-slate-400">Stop</div>
+                        <div class="text-[11px] font-semibold mt-1">$59,800</div>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center mt-5 pt-4 border-t border-slate-100">
+                    <span class="text-[10px] text-slate-400">Confidence</span>
+                    <span class="text-[11px] font-bold text-green-600">91%</span>
+                </div>
+            </div>
+
+
+            <!-- Tesla -->
+            <div class="bg-white border border-slate-200 rounded-xl p-5">
+
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="text-[14px] font-bold">Tesla</div>
+                        <div class="text-[10px] text-slate-400 mt-0.5">TSLA</div>
+                    </div>
+
+                    <span class="signal-sell text-[9px] font-bold px-2 py-1 rounded-md">
+                        SELL
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-3 gap-2 mt-5">
+                    <div>
+                        <div class="text-[9px] text-slate-400">Entry</div>
+                        <div class="text-[11px] font-semibold mt-1">$248.40</div>
+                    </div>
+
+                    <div>
+                        <div class="text-[9px] text-slate-400">Target</div>
+                        <div class="text-[11px] font-semibold mt-1">$226.00</div>
+                    </div>
+
+                    <div>
+                        <div class="text-[9px] text-slate-400">Stop</div>
+                        <div class="text-[11px] font-semibold mt-1">$259.00</div>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center mt-5 pt-4 border-t border-slate-100">
+                    <span class="text-[10px] text-slate-400">Confidence</span>
+                    <span class="text-[11px] font-bold text-green-600">84%</span>
+                </div>
+            </div>
+
+
+            <!-- Gold -->
+            <div class="bg-white border border-slate-200 rounded-xl p-5">
+
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="text-[14px] font-bold">Gold</div>
+                        <div class="text-[10px] text-slate-400 mt-0.5">XAU/USD</div>
+                    </div>
+
+                    <span class="signal-hold text-[9px] font-bold px-2 py-1 rounded-md">
+                        HOLD
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-3 gap-2 mt-5">
+                    <div>
+                        <div class="text-[9px] text-slate-400">Entry</div>
+                        <div class="text-[11px] font-semibold mt-1">$2,642</div>
+                    </div>
+
+                    <div>
+                        <div class="text-[9px] text-slate-400">Target</div>
+                        <div class="text-[11px] font-semibold mt-1">$2,710</div>
+                    </div>
+
+                    <div>
+                        <div class="text-[9px] text-slate-400">Stop</div>
+                        <div class="text-[11px] font-semibold mt-1">$2,590</div>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center mt-5 pt-4 border-t border-slate-100">
+                    <span class="text-[10px] text-slate-400">Confidence</span>
+                    <span class="text-[11px] font-bold text-green-600">79%</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ========================================================= -->
+<!-- MARKETS -->
+<!-- ========================================================= -->
+
+<section id="markets" class="py-16 lg:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+
+            <div>
+                <span class="text-[11px] font-bold uppercase tracking-wider text-primary">
+                    Diversify
+                </span>
+
+                <h2 class="text-[30px] lg:text-[36px] font-bold tracking-[-0.03em] mt-2">
+                    Explore global markets.
+                </h2>
+
+                <p class="text-[13px] text-slate-500 mt-2 max-w-xl">
+                    Find opportunities across multiple asset classes from one
+                    account.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+
+            <div class="group p-4 border border-slate-200 rounded-xl hover:border-primary/30 hover:shadow-card transition">
+                <div class="w-8 h-8 rounded-lg bg-orange-50 text-orange-500 flex items-center justify-center">
+                    <i data-lucide="bitcoin" class="w-4 h-4"></i>
+                </div>
+
+                <div class="text-[13px] font-bold mt-4">Crypto</div>
+                <div class="text-[10px] text-slate-400 mt-1">Digital assets</div>
+            </div>
+
+
+            <div class="group p-4 border border-slate-200 rounded-xl hover:border-primary/30 hover:shadow-card transition">
+                <div class="w-8 h-8 rounded-lg bg-blue-50 text-primary flex items-center justify-center">
+                    <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
+                </div>
+
+                <div class="text-[13px] font-bold mt-4">Stocks</div>
+                <div class="text-[10px] text-slate-400 mt-1">Global equities</div>
+            </div>
+
+
+            <div class="group p-4 border border-slate-200 rounded-xl hover:border-primary/30 hover:shadow-card transition">
+                <div class="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center">
+                    <i data-lucide="layers-3" class="w-4 h-4"></i>
+                </div>
+
+                <div class="text-[13px] font-bold mt-4">ETFs</div>
+                <div class="text-[10px] text-slate-400 mt-1">Diversified funds</div>
+            </div>
+
+
+            <div class="group p-4 border border-slate-200 rounded-xl hover:border-primary/30 hover:shadow-card transition">
+                <div class="w-8 h-8 rounded-lg bg-green-50 text-green-600 flex items-center justify-center">
+                    <i data-lucide="arrow-left-right" class="w-4 h-4"></i>
+                </div>
+
+                <div class="text-[13px] font-bold mt-4">Forex</div>
+                <div class="text-[10px] text-slate-400 mt-1">Currency markets</div>
+            </div>
+
+
+            <div class="group p-4 border border-slate-200 rounded-xl hover:border-primary/30 hover:shadow-card transition">
+                <div class="w-8 h-8 rounded-lg bg-red-50 text-accent flex items-center justify-center">
+                    <i data-lucide="gem" class="w-4 h-4"></i>
+                </div>
+
+                <div class="text-[13px] font-bold mt-4">Commodities</div>
+                <div class="text-[10px] text-slate-400 mt-1">Gold & more</div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ========================================================= -->
+<!-- INVESTMENT PLANS -->
+<!-- ========================================================= -->
+
+<section id="plans" class="py-16 lg:py-20 bg-soft">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center max-w-xl mx-auto mb-9">
+
+            <span class="text-[11px] font-bold uppercase tracking-wider text-primary">
+                Investment plans
+            </span>
+
+            <h2 class="text-[30px] lg:text-[36px] font-bold tracking-[-0.03em] mt-2">
+                Choose your strategy.
+            </h2>
+
+            <p class="text-[13px] leading-6 text-slate-500 mt-2">
+                Select an investment plan that matches your goals and capital.
             </p>
 
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+
+        {% if investment_plans %}
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
 
             {% for plan in investment_plans %}
 
-            <div class="glass rounded-3xl border border-zinc-800 hover:border-red-600 transition-all duration-300 p-8 relative overflow-hidden">
+            <div class="relative bg-white border {% if plan.featured %}border-primary{% else %}border-slate-200{% endif %} rounded-xl p-5 shadow-sm">
 
                 {% if plan.featured %}
-
-                <div class="absolute top-5 right-5 bg-red-600 text-white text-xs px-3 py-1 rounded-full font-semibold">
-                    POPULAR
+                <div class="absolute -top-2.5 left-5">
+                    <span class="bg-primary text-white text-[9px] font-bold px-2.5 py-1 rounded-full">
+                        MOST POPULAR
+                    </span>
                 </div>
-
                 {% endif %}
 
-                <h3 class="text-2xl font-bold text-white">
+                <div class="{% if plan.featured %}pt-2{% endif %}">
 
-                    {{ plan.name }}
-
-                </h3>
-
-                <p class="text-zinc-400 mt-2">
-
-                    {{ plan.description }}
-
-                </p>
-
-                <div class="mt-8 space-y-4">
-
-                    <div class="flex justify-between">
-
-                        <span class="text-zinc-500">
-                            Minimum
-                        </span>
-
-                        <span class="font-semibold text-white">
-
-                            ${{ plan.minimum_amount }}
-
-                        </span>
-
-                    </div>
-
-                    <div class="flex justify-between">
-
-                        <span class="text-zinc-500">
-                            Maximum
-                        </span>
-
-                        <span class="font-semibold text-white">
-
-                            ${{ plan.maximum_amount }}
-
-                        </span>
-
-                    </div>
-
-                    <div class="flex justify-between">
-
-                        <span class="text-zinc-500">
-                            Duration
-                        </span>
-
-                        <span class="font-semibold text-white">
-
-                            {{ plan.duration_days }} Days
-
-                        </span>
-
-                    </div>
-
-                    <div class="flex justify-between">
-
-                        <span class="text-zinc-500">
-                            ROI
-                        </span>
-
-                        <span class="font-bold text-green-500 text-lg">
-
-                            {{ plan.roi_percent }}%
-
-                        </span>
-
-                    </div>
-
-                </div>
-
-                <a href="{% url 'register' %}"
-
-                   class="mt-8 w-full inline-flex items-center justify-center rounded-xl bg-red-600 hover:bg-red-700 text-white py-3 font-semibold transition">
-
-                    Invest Now
-
-                </a>
-
-            </div>
-
-            {% empty %}
-
-            <div class="col-span-full">
-
-                <div class="glass rounded-3xl p-12 text-center">
-
-                    <h3 class="text-2xl font-bold text-white">
-
-                        No Investment Plans Available
-
+                    <h3 class="text-[15px] font-bold">
+                        {{ plan.name }}
                     </h3>
 
-                    <p class="text-zinc-500 mt-3">
-
-                        Investment plans will appear here once added from the admin panel.
-
+                    <p class="text-[11px] leading-5 text-slate-500 mt-1.5 min-h-[40px]">
+                        {{ plan.description }}
                     </p>
 
-                </div>
+                    <div class="mt-5">
 
+                        <div class="text-[10px] text-slate-400">
+                            Minimum investment
+                        </div>
+
+                        <div class="text-2xl font-bold text-ink mt-1">
+                            ${{ plan.minimum_amount|floatformat:0|intcomma }}
+                        </div>
+
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2 mt-5">
+
+                        <div class="bg-slate-50 rounded-lg p-3">
+                            <div class="text-[9px] text-slate-400">
+                                Maximum
+                            </div>
+
+                            <div class="text-[11px] font-bold mt-1">
+                                ${{ plan.maximum_amount|floatformat:0|intcomma }}
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-50 rounded-lg p-3">
+                            <div class="text-[9px] text-slate-400">
+                                Duration
+                            </div>
+
+                            <div class="text-[11px] font-bold mt-1">
+                                {{ plan.duration_days }} days
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="flex items-end justify-between mt-5 pt-4 border-t border-slate-100">
+
+                        <div>
+                            <div class="text-[9px] text-slate-400">
+                                Expected ROI
+                            </div>
+
+                            <div class="text-lg font-bold text-green-600 mt-0.5">
+                                {{ plan.roi_percent }}%
+                            </div>
+                        </div>
+
+                        <a
+                            href="{% url 'register' %}"
+                            class="bg-primary hover:bg-primary2 text-white text-[11px] font-semibold px-4 py-2.5 rounded-lg transition"
+                        >
+                            Invest now
+                        </a>
+
+                    </div>
+
+                </div>
             </div>
 
             {% endfor %}
 
         </div>
 
+        {% else %}
+
+        <div class="bg-white border border-slate-200 rounded-xl p-8 text-center">
+            <div class="w-10 h-10 rounded-full bg-slate-100 mx-auto flex items-center justify-center">
+                <i data-lucide="layers" class="w-4 h-4 text-slate-400"></i>
+            </div>
+
+            <h3 class="text-[14px] font-bold mt-3">
+                Investment plans coming soon
+            </h3>
+
+            <p class="text-[12px] text-slate-500 mt-1">
+                We're preparing new investment opportunities for you.
+            </p>
+        </div>
+
+        {% endif %}
+
     </div>
-
 </section>
-<section id="plans" class="py-20">
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6">
 
-        <div class="text-center max-w-3xl mx-auto">
+<!-- ========================================================= -->
+<!-- HOW IT WORKS -->
+<!-- ========================================================= -->
 
-            <span class="text-red-500 uppercase tracking-[0.35em] text-xs">
+<section class="py-16 lg:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-                INVESTMENT MARKETS
+        <div class="text-center max-w-lg mx-auto mb-10">
 
+            <span class="text-[11px] font-bold uppercase tracking-wider text-primary">
+                Simple process
             </span>
 
-            <h2 class="text-3xl sm:text-5xl font-black mt-4">
-
-                Everything In One Place
-
+            <h2 class="text-[30px] lg:text-[36px] font-bold tracking-[-0.03em] mt-2">
+                Start investing in minutes.
             </h2>
 
-            <p class="text-zinc-400 mt-6 leading-8">
+        </div>
 
-                Diversify your portfolio across multiple asset classes from one secure investment account.
 
+        <div class="grid md:grid-cols-3 gap-8 relative">
+
+            <div class="hidden md:block absolute top-5 left-[22%] right-[22%] border-t border-dashed border-slate-200"></div>
+
+
+            <div class="relative text-center">
+
+                <div class="relative w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center mx-auto text-[13px] font-bold z-10">
+                    01
+                </div>
+
+                <h3 class="text-[14px] font-bold mt-4">
+                    Create Account
+                </h3>
+
+                <p class="text-[11px] leading-5 text-slate-500 max-w-xs mx-auto mt-1.5">
+                    Sign up and complete your account setup in a few simple steps.
+                </p>
+
+            </div>
+
+
+            <div class="relative text-center">
+
+                <div class="relative w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center mx-auto text-[13px] font-bold z-10">
+                    02
+                </div>
+
+                <h3 class="text-[14px] font-bold mt-4">
+                    Fund Wallet
+                </h3>
+
+                <p class="text-[11px] leading-5 text-slate-500 max-w-xs mx-auto mt-1.5">
+                    Add funds securely and prepare your account for trading.
+                </p>
+
+            </div>
+
+
+            <div class="relative text-center">
+
+                <div class="relative w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center mx-auto text-[13px] font-bold z-10">
+                    03
+                </div>
+
+                <h3 class="text-[14px] font-bold mt-4">
+                    Start Investing
+                </h3>
+
+                <p class="text-[11px] leading-5 text-slate-500 max-w-xs mx-auto mt-1.5">
+                    Choose your assets, execute trades and grow your portfolio.
+                </p>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ========================================================= -->
+<!-- TESTIMONIALS -->
+<!-- ========================================================= -->
+
+<section class="py-16 lg:py-20 bg-soft">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center max-w-lg mx-auto mb-9">
+
+            <span class="text-[11px] font-bold uppercase tracking-wider text-primary">
+                Investors
+            </span>
+
+            <h2 class="text-[30px] lg:text-[36px] font-bold tracking-[-0.03em] mt-2">
+                Built for confident investors.
+            </h2>
+
+        </div>
+
+
+        <div class="grid md:grid-cols-3 gap-4">
+
+            <div class="bg-white border border-slate-200 rounded-xl p-5">
+                <div class="flex gap-1 text-yellow-500 text-[11px]">
+                    ★★★★★
+                </div>
+
+                <p class="text-[12px] leading-5 text-slate-600 mt-4">
+                    “The platform makes it much easier to keep track of my
+                    investments without jumping between different apps.”
+                </p>
+
+                <div class="flex items-center gap-2.5 mt-5">
+                    <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-[10px] font-bold text-primary">
+                        JD
+                    </div>
+
+                    <div>
+                        <div class="text-[11px] font-bold">James D.</div>
+                        <div class="text-[9px] text-slate-400">Investor</div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="bg-white border border-slate-200 rounded-xl p-5">
+                <div class="flex gap-1 text-yellow-500 text-[11px]">
+                    ★★★★★
+                </div>
+
+                <p class="text-[12px] leading-5 text-slate-600 mt-4">
+                    “I love having access to different markets from one
+                    dashboard. Everything feels clean and straightforward.”
+                </p>
+
+                <div class="flex items-center gap-2.5 mt-5">
+                    <div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center text-[10px] font-bold text-red-600">
+                        AM
+                    </div>
+
+                    <div>
+                        <div class="text-[11px] font-bold">Amanda M.</div>
+                        <div class="text-[9px] text-slate-400">Investor</div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="bg-white border border-slate-200 rounded-xl p-5">
+                <div class="flex gap-1 text-yellow-500 text-[11px]">
+                    ★★★★★
+                </div>
+
+                <p class="text-[12px] leading-5 text-slate-600 mt-4">
+                    “The market signals give me a useful starting point when
+                    researching what to invest in.”
+                </p>
+
+                <div class="flex items-center gap-2.5 mt-5">
+                    <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-[10px] font-bold text-slate-600">
+                        RK
+                    </div>
+
+                    <div>
+                        <div class="text-[11px] font-bold">Ryan K.</div>
+                        <div class="text-[9px] text-slate-400">Investor</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ========================================================= -->
+<!-- FAQ -->
+<!-- ========================================================= -->
+
+<section id="faq" class="py-16 lg:py-20">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center mb-9">
+
+            <span class="text-[11px] font-bold uppercase tracking-wider text-primary">
+                FAQ
+            </span>
+
+            <h2 class="text-[30px] lg:text-[36px] font-bold tracking-[-0.03em] mt-2">
+                Frequently asked questions.
+            </h2>
+
+        </div>
+
+
+        <div
+            x-data="{ open: 1 }"
+            class="divide-y divide-slate-200 border-y border-slate-200"
+        >
+
+            <div>
+                <button
+                    @click="open = open === 1 ? null : 1"
+                    class="w-full py-4 flex items-center justify-between text-left"
+                >
+                    <span class="text-[13px] font-semibold">
+                        What can I invest in?
+                    </span>
+
+                    <i
+                        data-lucide="chevron-down"
+                        class="w-4 h-4 text-slate-400 transition"
+                        :class="open === 1 ? 'rotate-180' : ''"
+                    ></i>
+                </button>
+
+                <div
+                    x-show="open === 1"
+                    x-collapse
+                    x-cloak
+                    class="pb-4 text-[12px] leading-5 text-slate-500"
+                >
+                    You can access a range of markets including stocks,
+                    crypto, ETFs, forex and commodities.
+                </div>
+            </div>
+
+
+            <div>
+                <button
+                    @click="open = open === 2 ? null : 2"
+                    class="w-full py-4 flex items-center justify-between text-left"
+                >
+                    <span class="text-[13px] font-semibold">
+                        How do I get started?
+                    </span>
+
+                    <i
+                        data-lucide="chevron-down"
+                        class="w-4 h-4 text-slate-400 transition"
+                        :class="open === 2 ? 'rotate-180' : ''"
+                    ></i>
+                </button>
+
+                <div
+                    x-show="open === 2"
+                    x-collapse
+                    x-cloak
+                    class="pb-4 text-[12px] leading-5 text-slate-500"
+                >
+                    Create an account, fund your wallet and select the
+                    investment opportunity that matches your goals.
+                </div>
+            </div>
+
+
+            <div>
+                <button
+                    @click="open = open === 3 ? null : 3"
+                    class="w-full py-4 flex items-center justify-between text-left"
+                >
+                    <span class="text-[13px] font-semibold">
+                        Is my account secure?
+                    </span>
+
+                    <i
+                        data-lucide="chevron-down"
+                        class="w-4 h-4 text-slate-400 transition"
+                        :class="open === 3 ? 'rotate-180' : ''"
+                    ></i>
+                </button>
+
+                <div
+                    x-show="open === 3"
+                    x-collapse
+                    x-cloak
+                    class="pb-4 text-[12px] leading-5 text-slate-500"
+                >
+                    We use modern security practices to help protect your
+                    account and investment information.
+                </div>
+            </div>
+
+
+            <div>
+                <button
+                    @click="open = open === 4 ? null : 4"
+                    class="w-full py-4 flex items-center justify-between text-left"
+                >
+                    <span class="text-[13px] font-semibold">
+                        Can I withdraw my funds?
+                    </span>
+
+                    <i
+                        data-lucide="chevron-down"
+                        class="w-4 h-4 text-slate-400 transition"
+                        :class="open === 4 ? 'rotate-180' : ''"
+                    ></i>
+                </button>
+
+                <div
+                    x-show="open === 4"
+                    x-collapse
+                    x-cloak
+                    class="pb-4 text-[12px] leading-5 text-slate-500"
+                >
+                    Available withdrawals depend on the investment product
+                    and the applicable terms.
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ========================================================= -->
+<!-- CTA -->
+<!-- ========================================================= -->
+
+<section class="pb-16 lg:pb-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="relative overflow-hidden rounded-2xl bg-primary px-6 py-10 sm:px-10 lg:px-14">
+
+            <div class="absolute -right-20 -top-20 w-64 h-64 rounded-full bg-white/10 blur-2xl"></div>
+            <div class="absolute -left-20 -bottom-20 w-64 h-64 rounded-full bg-red-500/10 blur-2xl"></div>
+
+            <div class="relative flex flex-col md:flex-row md:items-center justify-between gap-7">
+
+                <div class="max-w-xl">
+                    <h2 class="text-[28px] sm:text-[32px] font-bold text-white tracking-[-0.03em]">
+                        Ready to invest smarter?
+                    </h2>
+
+                    <p class="text-[12px] sm:text-[13px] leading-5 text-blue-100 mt-2">
+                        Create your account and start building your portfolio
+                        today.
+                    </p>
+                </div>
+
+                <a
+                    href="{% url 'register' %}"
+                    class="inline-flex items-center justify-center gap-2 bg-white text-primary hover:bg-slate-50 text-[12px] font-bold px-5 py-3 rounded-lg transition shrink-0"
+                >
+                    Create Account
+                    <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ========================================================= -->
+<!-- FOOTER -->
+<!-- ========================================================= -->
+
+<footer class="border-t border-slate-200 bg-white">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+
+            <!-- Brand -->
+            <div class="col-span-2 md:col-span-1">
+
+                <a href="/" class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">SM</span>
+                    </div>
+
+                    <div>
+                        <div class="font-bold text-[13px] text-ink">
+                            Stock Market
+                        </div>
+
+                        <div class="text-[9px] text-slate-400">
+                            Investment
+                        </div>
+                    </div>
+                </a>
+
+                <p class="text-[11px] leading-5 text-slate-500 mt-4 max-w-xs">
+                    A modern investment platform built to make global markets
+                    more accessible.
+                </p>
+
+            </div>
+
+
+            <!-- Platform -->
+            <div>
+                <h4 class="text-[11px] font-bold text-ink uppercase tracking-wider">
+                    Platform
+                </h4>
+
+                <div class="flex flex-col gap-2 mt-4 text-[11px] text-slate-500">
+                    <a href="#features" class="hover:text-primary">Features</a>
+                    <a href="#markets" class="hover:text-primary">Markets</a>
+                    <a href="#plans" class="hover:text-primary">Investment Plans</a>
+                    <a href="#faq" class="hover:text-primary">FAQ</a>
+                </div>
+            </div>
+
+
+            <!-- Company -->
+            <div>
+                <h4 class="text-[11px] font-bold text-ink uppercase tracking-wider">
+                    Company
+                </h4>
+
+                <div class="flex flex-col gap-2 mt-4 text-[11px] text-slate-500">
+                    <a href="{% url 'about' %}" class="hover:text-primary">About</a>
+                    <a href="#" class="hover:text-primary">Contact</a>
+                    <a href="#" class="hover:text-primary">Support</a>
+                </div>
+            </div>
+
+
+            <!-- Legal -->
+            <div>
+                <h4 class="text-[11px] font-bold text-ink uppercase tracking-wider">
+                    Legal
+                </h4>
+
+                <div class="flex flex-col gap-2 mt-4 text-[11px] text-slate-500">
+                    <a href="#" class="hover:text-primary">Privacy Policy</a>
+                    <a href="#" class="hover:text-primary">Terms of Service</a>
+                    <a href="#" class="hover:text-primary">Risk Disclosure</a>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="mt-8 pt-5 border-t border-slate-100 flex flex-col sm:flex-row justify-between gap-3">
+
+            <p class="text-[10px] text-slate-400">
+                © {% now "Y" %} Stock Market Investment. All rights reserved.
+            </p>
+
+            <p class="text-[10px] text-slate-400">
+                Investing involves risk. Past performance does not guarantee future results.
             </p>
 
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-14">
-
-            <!-- Crypto -->
-
-            <div class="glass rounded-3xl p-5 hover:scale-[1.02] transition duration-300">
-
-                <div class="w-14 h-14 rounded-2xl bg-orange-500/20 flex items-center justify-center">
-
-                    <i data-lucide="bitcoin"></i>
-
-                </div>
-
-                <h3 class="text-2xl font-bold mt-6">
-
-                    Cryptocurrency
-
-                </h3>
-
-                <p class="text-zinc-400 mt-3">
-
-                    Bitcoin, Ethereum, Solana, XRP and hundreds of digital assets.
-
-                </p>
-
-                <a href="#markets"
-                   class="inline-flex items-center gap-2 mt-6 text-red-500 font-semibold">
-
-                    Explore
-
-                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
-
-                </a>
-
-            </div>
-
-            <!-- Stocks -->
-
-            <div class="glass rounded-3xl p-5 hover:scale-[1.02] transition duration-300">
-
-                <div class="w-14 h-14 rounded-2xl bg-blue-500/20 flex items-center justify-center">
-
-                    <i data-lucide="chart-column"></i>
-
-                </div>
-
-                <h3 class="text-2xl font-bold mt-6">
-
-                    Stocks
-
-                </h3>
-
-                <p class="text-zinc-400 mt-3">
-
-                    Invest in leading global companies including Tesla, Apple and NVIDIA.
-
-                </p>
-
-                <a href="#markets"
-                   class="inline-flex items-center gap-2 mt-6 text-red-500 font-semibold">
-
-                    Explore
-
-                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
-
-                </a>
-
-            </div>
-
-            <!-- ETFs -->
-
-            <div class="glass rounded-3xl p-5 hover:scale-[1.02] transition duration-300">
-
-                <div class="w-14 h-14 rounded-2xl bg-green-500/20 flex items-center justify-center">
-
-                    <i data-lucide="briefcase-business"></i>
-
-                </div>
-
-                <h3 class="text-2xl font-bold mt-6">
-
-                    ETFs
-
-                </h3>
-
-                <p class="text-zinc-400 mt-3">
-
-                    Build diversified portfolios with professionally managed exchange-traded funds.
-
-                </p>
-
-                <a href="#markets"
-                   class="inline-flex items-center gap-2 mt-6 text-red-500 font-semibold">
-
-                    Explore
-
-                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
-
-                </a>
-
-            </div>
-
-            <!-- Forex -->
-
-            <div class="glass rounded-3xl p-5 hover:scale-[1.02] transition duration-300">
-
-                <div class="w-14 h-14 rounded-2xl bg-purple-500/20 flex items-center justify-center">
-
-                    <i data-lucide="badge-dollar-sign"></i>
-
-                </div>
-
-                <h3 class="text-2xl font-bold mt-6">
-
-                    Forex
-
-                </h3>
-
-                <p class="text-zinc-400 mt-3">
-
-                    Trade major, minor and exotic currency pairs in real time.
-
-                </p>
-
-                <a href="#markets"
-                   class="inline-flex items-center gap-2 mt-6 text-red-500 font-semibold">
-
-                    Explore
-
-                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
-
-                </a>
-
-            </div>
-
-            <!-- Commodities -->
-
-            <div class="glass rounded-3xl p-5 hover:scale-[1.02] transition duration-300">
-
-                <div class="w-14 h-14 rounded-2xl bg-yellow-500/20 flex items-center justify-center">
-
-                    <i data-lucide="gem"></i>
-
-                </div>
-
-                <h3 class="text-2xl font-bold mt-6">
-
-                    Commodities
-
-                </h3>
-
-                <p class="text-zinc-400 mt-3">
-
-                    Gold, silver, oil and other commodities to hedge and diversify.
-
-                </p>
-
-                <a href="#markets"
-                   class="inline-flex items-center gap-2 mt-6 text-red-500 font-semibold">
-
-                    Explore
-
-                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
-
-                </a>
-
-            </div>
-
-            <!-- Security -->
-
-            <div class="bg-gradient-to-br from-red-600 to-red-800 rounded-3xl p-6 flex flex-col justify-between">
-
-                <div>
-
-                    <h3 class="text-3xl font-black">
-
-                        Start Investing Today
-
-                    </h3>
-
-                    <p class="mt-4 text-red-100 leading-7">
-
-                        Open your account in minutes and begin building your investment portfolio.
-
-                    </p>
-
-                </div>
-
-                <a href="{% url 'register' %}"
-                   class="mt-8 bg-white text-black rounded-xl h-12 flex items-center justify-center font-bold hover:bg-zinc-200 transition">
-
-                    Create Free Account
-
-                </a>
-
-            </div>
-
-        </div>
-
     </div>
-
-</section>
-
-<!-- ===================================== -->
-<!-- HOW IT WORKS -->
-<!-- ===================================== -->
-
-<section class="py-20">
-
-    <div class="max-w-7xl mx-auto px-4 sm:px-6">
-
-        <div class="text-center">
-
-            <span class="text-red-500 uppercase tracking-[0.35em] text-xs">
-
-                SIMPLE PROCESS
-
-            </span>
-
-            <h2 class="text-3xl sm:text-5xl font-black mt-4">
-
-                Start Investing In Minutes
-
-            </h2>
-
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-14">
-
-            <div class="glass rounded-3xl p-6 text-center">
-
-                <div class="w-16 h-16 rounded-full bg-red-600 mx-auto flex items-center justify-center text-2xl font-black">
-
-                    1
-
-                </div>
-
-                <h3 class="text-2xl font-bold mt-6">
-
-                    Create Account
-
-                </h3>
-
-                <p class="text-zinc-400 mt-4">
-
-                    Register securely using your email address in just a few minutes.
-
-                </p>
-
-            </div>
-
-            <div class="glass rounded-3xl p-6 text-center">
-
-                <div class="w-16 h-16 rounded-full bg-red-600 mx-auto flex items-center justify-center text-2xl font-black">
-
-                    2
-
-                </div>
-
-                <h3 class="text-2xl font-bold mt-6">
-
-                    Fund Wallet
-
-                </h3>
-
-                <p class="text-zinc-400 mt-4">
-
-                    Deposit funds using your preferred payment method.
-
-                </p>
-
-            </div>
-
-            <div class="glass rounded-3xl p-6 text-center">
-
-                <div class="w-16 h-16 rounded-full bg-red-600 mx-auto flex items-center justify-center text-2xl font-black">
-
-                    3
-
-                </div>
-
-                <h3 class="text-2xl font-bold mt-6">
-
-                    Start Trading
-
-                </h3>
-
-                <p class="text-zinc-400 mt-4">
-
-                    Buy, sell and manage your investments from one dashboard.
-
-                </p>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-<!-- ===================================== -->
-<!-- STATS -->
-<!-- ===================================== -->
-<!-- ===================================== -->
-<!-- TESTIMONIALS -->
-<!-- ===================================== -->
-
-<section class="py-20 bg-[#090909]">
-
-<div class="max-w-7xl mx-auto px-4 sm:px-6">
-
-<div class="text-center">
-
-<span class="text-red-500 uppercase tracking-[0.35em] text-xs">
-
-TESTIMONIALS
-
-</span>
-
-<h2 class="text-3xl sm:text-5xl font-black mt-4">
-
-Trusted By Investors Worldwide
-
-</h2>
-
-</div>
-
-<div class="grid md:grid-cols-3 gap-6 mt-14">
-
-<div class="glass rounded-3xl p-6">
-
-★★★★★
-
-<p class="text-zinc-400 mt-5">
-
-The best investment platform I've ever used. Fast deposits and withdrawals with a beautiful interface.
-
-</p>
-
-<div class="mt-6">
-
-<h3 class="font-bold">
-
-Michael A.
-
-</h3>
-
-<p class="text-zinc-500 text-sm">
-
-United States
-
-</p>
-
-</div>
-
-</div>
-
-<div class="glass rounded-3xl p-6">
-
-★★★★★
-
-<p class="text-zinc-400 mt-5">
-
-Managing my crypto and stock investments in one place has made everything much easier.
-
-</p>
-
-<div class="mt-6">
-
-<h3 class="font-bold">
-
-Sophia L.
-
-</h3>
-
-<p class="text-zinc-500 text-sm">
-
-Canada
-
-</p>
-
-</div>
-
-</div>
-
-<div class="glass rounded-3xl p-6">
-
-★★★★★
-
-<p class="text-zinc-400 mt-5">
-
-Clean design, excellent support and a smooth trading experience.
-
-</p>
-
-<div class="mt-6">
-
-<h3 class="font-bold">
-
-Daniel K.
-
-</h3>
-
-<p class="text-zinc-500 text-sm">
-
-United Kingdom
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-<!-- ===================================== -->
-<!-- FAQ -->
-<!-- ===================================== -->
-
-<section id="faq" class="py-20">
-
-<div class="max-w-4xl mx-auto px-4 sm:px-6">
-
-<div class="text-center">
-
-<span class="text-red-500 uppercase tracking-[0.35em] text-xs">
-
-FAQ
-
-</span>
-
-<h2 class="text-3xl sm:text-5xl font-black mt-4">
-
-Frequently Asked Questions
-
-</h2>
-
-<p class="text-zinc-400 mt-6">
-
-Everything you need to know before you start investing.
-
-</p>
-
-</div>
-
-<div class="mt-14 space-y-4">
-
-<div x-data="{open:false}" class="glass rounded-2xl">
-
-<button
-@click="open=!open"
-class="w-full flex justify-between items-center p-5">
-
-<span class="font-semibold">
-
-Is XCoin secure?
-
-</span>
-
-<i data-lucide="chevron-down"
-:class="{'rotate-180':open}"
-class="transition"></i>
-
-</button>
-
-<div x-show="open"
-x-transition
-class="px-5 pb-5 text-zinc-400 leading-7">
-
-Yes. We use modern encryption, secure authentication and multiple layers of protection to safeguard user accounts and transactions.
-
-</div>
-
-</div>
-
-<div x-data="{open:false}" class="glass rounded-2xl">
-
-<button
-@click="open=!open"
-class="w-full flex justify-between items-center p-5">
-
-<span class="font-semibold">
-
-How do I start investing?
-
-</span>
-
-<i data-lucide="chevron-down"
-:class="{'rotate-180':open}"
-class="transition"></i>
-
-</button>
-
-<div x-show="open"
-x-transition
-class="px-5 pb-5 text-zinc-400 leading-7">
-
-Create your account, complete identity verification if required, fund your wallet, and choose the assets you want to invest in.
-
-</div>
-
-</div>
-
-<div x-data="{open:false}" class="glass rounded-2xl">
-
-<button
-@click="open=!open"
-class="w-full flex justify-between items-center p-5">
-
-<span class="font-semibold">
-
-Can I withdraw anytime?
-
-</span>
-
-<i data-lucide="chevron-down"
-:class="{'rotate-180':open}"
-class="transition"></i>
-
-</button>
-
-<div x-show="open"
-x-transition
-class="px-5 pb-5 text-zinc-400 leading-7">
-
-Yes. Withdrawals can be requested at any time, subject to account verification and platform policies.
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- ===================================== -->
-<!-- CTA -->
-<!-- ===================================== -->
-
-<section class="py-20">
-
-<div class="max-w-7xl mx-auto px-4 sm:px-6">
-
-<div class="rounded-[36px] bg-gradient-to-r from-red-600 to-red-800 p-8 sm:p-12 text-center">
-
-<h2 class="text-3xl sm:text-5xl font-black">
-
-Start Building Your Portfolio Today
-
-</h2>
-
-<p class="mt-6 text-red-100 max-w-2xl mx-auto leading-8">
-
-Join thousands of investors trading cryptocurrencies, stocks, ETFs, commodities and forex on one secure platform.
-
-</p>
-
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-lg mx-auto mt-10">
-
-<a
-href="{% url 'register' %}"
-class="h-12 rounded-xl bg-white text-black font-bold flex items-center justify-center hover:bg-zinc-100 transition">
-
-Create Account
-
-</a>
-
-<a
-href="{% url 'login' %}"
-class="h-12 rounded-xl border border-white/30 flex items-center justify-center hover:bg-white/10 transition">
-
-Login
-
-</a>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- ===================================== -->
-<!-- FOOTER -->
-<!-- ===================================== -->
-
-<footer class="border-t border-zinc-900 py-16">
-
-<div class="max-w-7xl mx-auto px-4 sm:px-6">
-
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-
-<div>
-
-<h2 class="text-3xl font-black">
-
-<span class="text-red-600">X</span>Coin
-
-</h2>
-
-<p class="text-zinc-500 mt-5 leading-7">
-
-A modern investment platform designed for investors who want to trade confidently across global financial markets.
-
-</p>
-
-</div>
-
-<div>
-
-<h3 class="font-bold mb-5">
-
-Company
-
-</h3>
-
-<div class="space-y-3 text-zinc-400">
-
-<a href="{% url 'about' %}" class="block hover:text-white">About</a>
-
-<a href="{% url 'careers' %}" class="block hover:text-white">Careers</a>
-
-<a href="{% url 'contact' %}" class="block hover:text-white">Contact</a>
-
-<a href="{% url 'blog' %}" class="block hover:text-white">Blog</a>
-
-</div>
-
-</div>
-
-<div>
-
-<h3 class="font-bold mb-5">
-
-Legal
-
-</h3>
-
-<div class="space-y-3 text-zinc-400">
-
-<a href="{% url 'privacy_policy' %}" class="block hover:text-white">
-
-Privacy Policy
-
-</a>
-
-<a href="{% url 'terms_of_service' %}" class="block hover:text-white">
-
-Terms of Service
-
-</a>
-
-<a href="{% url 'risk_disclosure' %}" class="block hover:text-white">
-
-Risk Disclosure
-
-</a>
-
-</div>
-
-</div>
-
-<div>
-
-<h3 class="font-bold mb-5">
-
-Follow Us
-
-</h3>
-
-<div class="flex gap-3">
-
-<a href="#" class="w-11 h-11 rounded-xl glass flex items-center justify-center">
-
-<i data-lucide="facebook"></i>
-
-</a>
-
-<a href="#" class="w-11 h-11 rounded-xl glass flex items-center justify-center">
-
-<i data-lucide="twitter"></i>
-
-</a>
-
-<a href="#" class="w-11 h-11 rounded-xl glass flex items-center justify-center">
-
-<i data-lucide="instagram"></i>
-
-</a>
-
-<a href="#" class="w-11 h-11 rounded-xl glass flex items-center justify-center">
-
-<i data-lucide="linkedin"></i>
-
-</a>
-
-</div>
-
-</div>
-
-</div>
-
-<hr class="border-zinc-900 my-10">
-
-<div class="flex flex-col sm:flex-row justify-between items-center gap-4 text-zinc-500 text-sm">
-
-<p>
-
-© {% now "Y" %} XCoin. All rights reserved.
-
-</p>
-
-<p>
-
-Built for the future of investing.
-
-</p>
-
-</div>
-
-</div>
 
 </footer>
 
+
+<!-- ========================================================= -->
+<!-- TAWK.TO -->
+<!-- ========================================================= -->
+
 <script>
+    var Tawk_API = Tawk_API || {};
+    var Tawk_LoadStart = new Date();
 
-lucide.createIcons();
+    (function () {
+        var s1 = document.createElement("script");
+        var s0 = document.getElementsByTagName("script")[0];
 
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/6a6e2954a16bfc1d4f1a85fd/1juv52svt';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+
+        s0.parentNode.insertBefore(s1, s0);
+    })();
 </script>
 
+
+<!-- ========================================================= -->
+<!-- ICON INITIALIZATION -->
+<!-- ========================================================= -->
+
 <script>
-lucide.createIcons();
+    document.addEventListener("DOMContentLoaded", function () {
+        lucide.createIcons();
+    });
 </script>
 
 </body>

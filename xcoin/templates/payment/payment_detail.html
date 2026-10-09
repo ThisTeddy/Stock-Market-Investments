@@ -1,587 +1,501 @@
 {% extends "base.html" %}
 
-
 {% block title %}
 Payment Details
 {% endblock %}
 
-
-
 {% block content %}
 
+<div class="w-full max-w-5xl mx-auto">
 
 
-<div class="max-w-5xl mx-auto px-4 sm:px-6 py-10">
+    <!-- ================================================= -->
+    <!-- HEADER -->
+    <!-- ================================================= -->
+
+    <section class="relative overflow-hidden rounded-xl bg-[#0B3B8F] px-5 py-5">
+
+        <div class="absolute -right-16 -top-20 w-48 h-48 rounded-full bg-white/10 blur-3xl"></div>
+
+        <div class="absolute right-20 -bottom-16 w-36 h-36 rounded-full bg-[#E53935]/20 blur-3xl"></div>
+
+        <div class="relative flex items-center justify-between gap-4">
+
+            <div class="flex items-center gap-3">
+
+                <div class="w-10 h-10 rounded-lg bg-white flex items-center justify-center shrink-0">
+
+                    <i
+                        data-lucide="receipt"
+                        class="w-5 h-5 text-[#0B3B8F]">
+                    </i>
+
+                </div>
+
+                <div>
+
+                    <p class="text-[8px] uppercase tracking-[0.15em] font-semibold text-blue-100">
+                        Payment Record
+                    </p>
+
+                    <h1 class="text-base sm:text-lg font-bold text-white mt-0.5">
+                        Payment Details
+                    </h1>
+
+                    <p class="text-[9px] text-blue-100 mt-1 break-all">
+                        Reference: {{ payment.reference }}
+                    </p>
+
+                </div>
+
+            </div>
+
+            <span class="hidden sm:inline-flex items-center gap-1.5 bg-white/10 border border-white/10 px-2.5 py-1.5 rounded-md text-[8px] text-white font-medium">
+
+                <i
+                    data-lucide="shield-check"
+                    class="w-3 h-3">
+                </i>
+
+                Secure Record
+
+            </span>
+
+        </div>
+
+    </section>
 
 
+    <!-- ================================================= -->
+    <!-- SUMMARY -->
+    <!-- ================================================= -->
+
+    <section class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-3">
 
 
+        <!-- AMOUNT -->
 
-<!-- HEADER -->
+        <div class="soft-card rounded-xl p-3.5">
 
-<div class="bg-primary text-white rounded-2xl p-8 shadow-lg">
+            <p class="text-[9px] uppercase tracking-wider font-semibold text-[#8995A7]">
+                Amount
+            </p>
+
+            <h2 class="text-xl font-bold tracking-tight text-[#0B3B8F] mt-2">
+                ${{ payment.amount }}
+            </h2>
+
+        </div>
 
 
-<div class="flex items-center gap-4">
+        <!-- PURPOSE -->
+
+        <div class="soft-card rounded-xl p-3.5">
+
+            <p class="text-[9px] uppercase tracking-wider font-semibold text-[#8995A7]">
+                Purpose
+            </p>
+
+            <h2 class="text-sm font-bold text-[#07152E] mt-2">
+                {{ payment.purpose|title }}
+            </h2>
+
+        </div>
 
 
-<div class="bg-white text-primary p-4 rounded-xl">
+        <!-- STATUS -->
+
+        <div class="soft-card rounded-xl p-3.5">
+
+            <p class="text-[9px] uppercase tracking-wider font-semibold text-[#8995A7]">
+                Status
+            </p>
 
 
-<i data-lucide="receipt" class="w-8 h-8"></i>
+            {% if payment.status == "approved" %}
 
+            <span class="inline-flex items-center gap-1.5 mt-2 bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-md text-[9px] font-semibold">
+
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+
+                Approved
+
+            </span>
+
+
+            {% elif payment.status == "pending" %}
+
+            <span class="inline-flex items-center gap-1.5 mt-2 bg-amber-50 text-amber-700 px-2.5 py-1 rounded-md text-[9px] font-semibold">
+
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+
+                Pending
+
+            </span>
+
+
+            {% else %}
+
+            <span class="inline-flex items-center gap-1.5 mt-2 bg-red-50 text-[#D92D2D] px-2.5 py-1 rounded-md text-[9px] font-semibold">
+
+                <span class="w-1.5 h-1.5 rounded-full bg-[#E53935]"></span>
+
+                Rejected
+
+            </span>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================================= -->
+    <!-- PAYMENT INFORMATION -->
+    <!-- ================================================= -->
+
+    <section class="soft-card rounded-xl mt-3 overflow-hidden">
+
+
+        <div class="px-4 py-3.5 border-b border-[#E5EAF1]">
+
+            <div class="flex items-center gap-2.5">
+
+                <div class="w-7 h-7 rounded-lg bg-[#EAF1FB] flex items-center justify-center">
+
+                    <i
+                        data-lucide="file-text"
+                        class="w-3.5 h-3.5 text-[#0B3B8F]">
+                    </i>
+
+                </div>
+
+                <div>
+
+                    <h2 class="text-[11px] font-bold text-[#07152E]">
+                        Payment Information
+                    </h2>
+
+                    <p class="text-[9px] text-[#8995A7] mt-0.5">
+                        Transaction details associated with this payment
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="grid md:grid-cols-2">
+
+
+            <!-- METHOD -->
+
+            <div class="flex items-center justify-between gap-4 px-4 py-3 border-b md:border-r border-[#EEF1F5]">
+
+                <span class="flex items-center gap-2 text-[9px] text-[#718096]">
+
+                    <i
+                        data-lucide="credit-card"
+                        class="w-3.5 h-3.5 text-[#0B3B8F]">
+                    </i>
+
+                    Method
+
+                </span>
+
+                <strong class="text-[9px] text-[#07152E]">
+                    {{ payment.method|title }}
+                </strong>
+
+            </div>
+
+
+            <!-- REFERENCE -->
+
+            <div class="flex items-center justify-between gap-4 px-4 py-3 border-b border-[#EEF1F5]">
+
+                <span class="flex items-center gap-2 text-[9px] text-[#718096]">
+
+                    <i
+                        data-lucide="hash"
+                        class="w-3.5 h-3.5 text-[#0B3B8F]">
+                    </i>
+
+                    Reference
+
+                </span>
+
+                <strong class="text-[9px] text-[#07152E] break-all text-right">
+                    {{ payment.reference }}
+                </strong>
+
+            </div>
+
+
+            <!-- NETWORK -->
+
+            <div class="flex items-center justify-between gap-4 px-4 py-3 border-b md:border-r border-[#EEF1F5]">
+
+                <span class="flex items-center gap-2 text-[9px] text-[#718096]">
+
+                    <i
+                        data-lucide="network"
+                        class="w-3.5 h-3.5 text-[#0B3B8F]">
+                    </i>
+
+                    Network
+
+                </span>
+
+                <strong class="text-[9px] text-[#07152E]">
+                    {{ payment.network|default:"N/A" }}
+                </strong>
+
+            </div>
+
+
+            <!-- DATE -->
+
+            <div class="flex items-center justify-between gap-4 px-4 py-3 border-b border-[#EEF1F5]">
+
+                <span class="flex items-center gap-2 text-[9px] text-[#718096]">
+
+                    <i
+                        data-lucide="calendar"
+                        class="w-3.5 h-3.5 text-[#0B3B8F]">
+                    </i>
+
+                    Date
+
+                </span>
+
+                <strong class="text-[9px] text-[#07152E]">
+                    {{ payment.created_at|date:"M d, Y" }}
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================================= -->
+    <!-- TRANSACTION ID -->
+    <!-- ================================================= -->
+
+    {% if payment.txid %}
+
+    <section class="soft-card rounded-xl mt-3 p-4">
+
+        <div class="flex items-center gap-2.5">
+
+            <div class="w-7 h-7 rounded-lg bg-[#EAF1FB] flex items-center justify-center">
+
+                <i
+                    data-lucide="fingerprint"
+                    class="w-3.5 h-3.5 text-[#0B3B8F]">
+                </i>
+
+            </div>
+
+            <div>
+
+                <h2 class="text-[11px] font-bold text-[#07152E]">
+                    Transaction ID
+                </h2>
+
+                <p class="text-[9px] text-[#8995A7] mt-0.5">
+                    Blockchain transaction reference
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="mt-3 rounded-lg bg-[#F5F8FC] border border-[#E5EAF1] px-3 py-2.5 break-all">
+
+            <p class="font-mono text-[9px] text-[#566276] leading-relaxed">
+                {{ payment.txid }}
+            </p>
+
+        </div>
+
+    </section>
+
+    {% endif %}
+
+
+    <!-- ================================================= -->
+    <!-- PAYMENT PROOF -->
+    <!-- ================================================= -->
+
+    {% if payment.proof %}
+
+    <section class="soft-card rounded-xl mt-3 p-4">
+
+        <div class="flex items-center justify-between">
+
+            <div class="flex items-center gap-2.5">
+
+                <div class="w-7 h-7 rounded-lg bg-[#EAF1FB] flex items-center justify-center">
+
+                    <i
+                        data-lucide="image"
+                        class="w-3.5 h-3.5 text-[#0B3B8F]">
+                    </i>
+
+                </div>
+
+                <div>
+
+                    <h2 class="text-[11px] font-bold text-[#07152E]">
+                        Payment Proof
+                    </h2>
+
+                    <p class="text-[9px] text-[#8995A7] mt-0.5">
+                        Submitted payment evidence
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="mt-3">
+
+            <img
+                src="{{ payment.proof.url }}"
+                class="max-w-sm max-h-80 rounded-lg border border-[#E5EAF1] object-contain">
+
+        </div>
+
+    </section>
+
+    {% endif %}
+
+
+    <!-- ================================================= -->
+    <!-- TIMELINE -->
+    <!-- ================================================= -->
+
+    <section class="soft-card rounded-xl mt-3 p-4">
+
+        <div class="flex items-center gap-2.5 mb-4">
+
+            <div class="w-7 h-7 rounded-lg bg-[#EAF1FB] flex items-center justify-center">
+
+                <i
+                    data-lucide="route"
+                    class="w-3.5 h-3.5 text-[#0B3B8F]">
+                </i>
+
+            </div>
+
+            <div>
+
+                <h2 class="text-[11px] font-bold text-[#07152E]">
+                    Payment Timeline
+                </h2>
+
+                <p class="text-[9px] text-[#8995A7] mt-0.5">
+                    Activity associated with this payment
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="relative ml-1">
+
+
+            <!-- CONNECTING LINE -->
+
+            <div class="absolute left-[6px] top-2 bottom-2 w-px bg-[#DCE4EF]"></div>
+
+
+            <!-- PAYMENT SUBMITTED -->
+
+            <div class="relative flex gap-3 pb-5">
+
+                <div class="relative z-10 w-[13px] h-[13px] rounded-full bg-[#0B3B8F] border-[3px] border-white shadow-sm shrink-0"></div>
+
+                <div>
+
+                    <h3 class="text-[10px] font-semibold text-[#07152E]">
+                        Payment Submitted
+                    </h3>
+
+                    <p class="text-[9px] text-[#8995A7] mt-1">
+                        {{ payment.created_at|date:"M d, Y H:i" }}
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            {% if payment.status == "approved" %}
+
+            <!-- PAYMENT APPROVED -->
+
+            <div class="relative flex gap-3">
+
+                <div class="relative z-10 w-[13px] h-[13px] rounded-full bg-emerald-500 border-[3px] border-white shadow-sm shrink-0"></div>
+
+                <div>
+
+                    <div class="flex items-center gap-2">
+
+                        <h3 class="text-[10px] font-semibold text-[#07152E]">
+                            Payment Approved
+                        </h3>
+
+                        <span class="bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded text-[8px] font-semibold">
+                            Confirmed
+                        </span>
+
+                    </div>
+
+                    <p class="text-[9px] text-[#8995A7] mt-1">
+                        Your payment has been confirmed.
+                    </p>
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================================= -->
+    <!-- BACK -->
+    <!-- ================================================= -->
+
+    <a
+        href="{% url 'payment_history' %}"
+        class="inline-flex items-center gap-2 mt-3 text-[10px] font-semibold text-[#0B3B8F] hover:text-[#082F73] transition">
+
+        <i
+            data-lucide="arrow-left"
+            class="w-3.5 h-3.5">
+        </i>
+
+        Back to Payments
+
+    </a>
 
 </div>
-
-
-
-
-<div>
-
-
-<h1 class="text-3xl font-bold">
-
-Payment Details
-
-</h1>
-
-
-<p class="text-blue-100">
-
-Reference: {{ payment.reference }}
-
-</p>
-
-
-</div>
-
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- SUMMARY CARDS -->
-
-
-<div class="grid md:grid-cols-3 gap-6 mt-8">
-
-
-
-
-
-<div class="bg-white shadow rounded-2xl p-6">
-
-
-<p class="text-gray-500">
-
-Amount
-
-</p>
-
-
-<h2 class="text-3xl font-bold text-primary mt-2">
-
-${{ payment.amount }}
-
-</h2>
-
-
-</div>
-
-
-
-
-
-
-
-<div class="bg-white shadow rounded-2xl p-6">
-
-
-<p class="text-gray-500">
-
-Purpose
-
-</p>
-
-
-<h2 class="text-xl font-bold mt-3">
-
-{{ payment.purpose|title }}
-
-</h2>
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="bg-white shadow rounded-2xl p-6">
-
-
-<p class="text-gray-500">
-
-Status
-
-</p>
-
-
-
-{% if payment.status == "approved" %}
-
-
-<span class="inline-block mt-3 bg-green-100 text-green-700 px-4 py-2 rounded-full">
-
-Approved
-
-</span>
-
-
-
-{% elif payment.status == "pending" %}
-
-
-<span class="inline-block mt-3 bg-yellow-100 text-yellow-700 px-4 py-2 rounded-full">
-
-Pending
-
-</span>
-
-
-
-{% else %}
-
-
-<span class="inline-block mt-3 bg-red-100 text-red-700 px-4 py-2 rounded-full">
-
-Rejected
-
-</span>
-
-
-
-{% endif %}
-
-
-
-</div>
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- DETAILS -->
-
-
-<div class="bg-white shadow rounded-2xl p-8 mt-8">
-
-
-
-<h2 class="text-xl font-bold text-primary mb-6">
-
-Payment Information
-
-</h2>
-
-
-
-
-
-
-<div class="grid md:grid-cols-2 gap-6">
-
-
-
-
-
-<div class="flex justify-between border-b pb-3">
-
-
-<span class="text-gray-500 flex items-center gap-2">
-
-
-<i data-lucide="credit-card" class="w-4"></i>
-
-
-Method
-
-
-</span>
-
-
-
-<strong>
-
-{{ payment.method|title }}
-
-</strong>
-
-
-
-</div>
-
-
-
-
-
-
-<div class="flex justify-between border-b pb-3">
-
-
-<span class="text-gray-500 flex items-center gap-2">
-
-
-<i data-lucide="hash" class="w-4"></i>
-
-
-Reference
-
-
-</span>
-
-
-
-<strong class="text-sm">
-
-{{ payment.reference }}
-
-</strong>
-
-
-
-</div>
-
-
-
-
-
-
-
-<div class="flex justify-between border-b pb-3">
-
-
-<span class="text-gray-500 flex items-center gap-2">
-
-
-<i data-lucide="network" class="w-4"></i>
-
-
-Network
-
-
-</span>
-
-
-
-<strong>
-
-{{ payment.network|default:"N/A" }}
-
-</strong>
-
-
-
-</div>
-
-
-
-
-
-
-
-<div class="flex justify-between border-b pb-3">
-
-
-<span class="text-gray-500 flex items-center gap-2">
-
-
-<i data-lucide="calendar" class="w-4"></i>
-
-
-Date
-
-
-</span>
-
-
-
-<strong>
-
-{{ payment.created_at|date:"M d, Y" }}
-
-</strong>
-
-
-
-</div>
-
-
-
-
-
-</div>
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- TRANSACTION ID -->
-
-
-{% if payment.txid %}
-
-
-<div class="bg-white shadow rounded-2xl p-8 mt-8">
-
-
-<h2 class="text-xl font-bold text-primary mb-4">
-
-Transaction ID
-
-</h2>
-
-
-
-<div class="bg-gray-100 p-4 rounded-xl break-all text-sm">
-
-
-{{ payment.txid }}
-
-
-</div>
-
-
-
-</div>
-
-
-{% endif %}
-
-
-
-
-
-
-
-
-
-<!-- PROOF -->
-
-
-{% if payment.proof %}
-
-
-<div class="bg-white shadow rounded-2xl p-8 mt-8">
-
-
-<h2 class="text-xl font-bold text-primary mb-5">
-
-Payment Proof
-
-</h2>
-
-
-
-<img
-
-src="{{ payment.proof.url }}"
-
-class="max-w-sm rounded-xl shadow"
-
->
-
-
-
-</div>
-
-
-{% endif %}
-
-
-
-
-
-
-
-
-
-<!-- TIMELINE -->
-
-
-<div class="bg-white shadow rounded-2xl p-8 mt-8">
-
-
-<h2 class="text-xl font-bold text-primary mb-6">
-
-Payment Timeline
-
-</h2>
-
-
-
-
-<div class="space-y-6">
-
-
-
-
-
-<div class="flex gap-4">
-
-
-<div class="bg-primary text-white rounded-full w-10 h-10 flex items-center justify-center">
-
-
-<i data-lucide="send" class="w-5"></i>
-
-
-</div>
-
-
-
-<div>
-
-
-<h3 class="font-semibold">
-
-Payment Submitted
-
-</h3>
-
-
-<p class="text-gray-500">
-
-{{ payment.created_at|date:"M d, Y H:i" }}
-
-</p>
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-{% if payment.status == "approved" %}
-
-
-
-<div class="flex gap-4">
-
-
-<div class="bg-green-600 text-white rounded-full w-10 h-10 flex items-center justify-center">
-
-
-<i data-lucide="check" class="w-5"></i>
-
-
-</div>
-
-
-
-<div>
-
-
-<h3 class="font-semibold">
-
-Payment Approved
-
-</h3>
-
-
-<p class="text-gray-500">
-
-Your payment has been confirmed.
-
-</p>
-
-
-</div>
-
-
-</div>
-
-
-
-{% endif %}
-
-
-
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<a href="{% url 'payment_history' %}"
-
-class="inline-flex items-center gap-2 mt-8 text-primary font-semibold">
-
-
-<i data-lucide="arrow-left" class="w-4"></i>
-
-
-Back to Payments
-
-
-</a>
-
-
-
-
-
-
-</div>
-
-
 
 {% endblock %}

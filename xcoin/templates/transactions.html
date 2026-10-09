@@ -1,602 +1,360 @@
-{% extends "base.html" %}
 
-{% block title %}
-Transaction History
-{% endblock %}
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block title %}Transaction History | Stock Market Investment{% endblock %}
 
 {% block content %}
+<section class="mx-auto w-full max-w-[1400px] space-y-5">
 
-<section class="w-full max-w-[1400px] mx-auto space-y-5 sm:space-y-6">
+    <!-- Header -->
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div class="min-w-0">
+            <p class="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#0B3B8F]">
+                Account Activity
+            </p>
+            <h1 class="mt-1 text-xl font-bold tracking-tight text-[#07152E] sm:text-2xl">
+                Transaction History
+            </h1>
+            <p class="mt-1 text-xs text-slate-500 sm:text-sm">
+                Track your deposits, withdrawals, investments and returns.
+            </p>
+        </div>
 
-<!-- ================================================= -->
-<!-- HEADER -->
-<!-- ================================================= -->
+        <a href="{% url 'dashboard' %}"
+           class="inline-flex h-9 items-center justify-center gap-2 self-start rounded-lg bg-[#0B3B8F] px-3.5 text-xs font-semibold text-white transition hover:bg-[#124EA8] sm:self-auto">
+            <i data-lucide="layout-dashboard" class="h-4 w-4"></i>
+            Dashboard
+        </a>
+    </div>
 
-<div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <!-- Summary -->
+    <div class="grid grid-cols-2 gap-3 xl:grid-cols-4">
+        <div class="soft-card rounded-xl border border-slate-200 bg-white p-3.5 sm:p-4">
+            <div class="flex items-center justify-between gap-2">
+                <p class="text-[10px] font-medium uppercase tracking-wide text-slate-500">All Transactions</p>
+                <i data-lucide="layers-3" class="h-4 w-4 text-[#0B3B8F]"></i>
+            </div>
+            <p class="mt-2 text-xl font-bold text-[#07152E]">{{ transactions.count }}</p>
+            <p class="mt-1 text-[10px] text-slate-500">Recorded activity</p>
+        </div>
 
-    <div class="min-w-0">
+        <div class="soft-card rounded-xl border border-slate-200 bg-white p-3.5 sm:p-4">
+            <div class="flex items-center justify-between gap-2">
+                <p class="text-[10px] font-medium uppercase tracking-wide text-slate-500">Deposits</p>
+                <i data-lucide="arrow-down-left" class="h-4 w-4 text-emerald-600"></i>
+            </div>
+            <p class="mt-2 text-xl font-bold text-[#07152E]">{{ deposits_count }}</p>
+            <p class="mt-1 text-[10px] text-slate-500">Deposit transactions</p>
+        </div>
 
-        <p class="text-[10px] sm:text-xs uppercase tracking-[0.2em] sm:tracking-[0.3em] text-red-500 font-semibold">
-            Wallet Activity
+        <div class="soft-card rounded-xl border border-slate-200 bg-white p-3.5 sm:p-4">
+            <div class="flex items-center justify-between gap-2">
+                <p class="text-[10px] font-medium uppercase tracking-wide text-slate-500">Withdrawals</p>
+                <i data-lucide="arrow-up-right" class="h-4 w-4 text-[#E53935]"></i>
+            </div>
+            <p class="mt-2 text-xl font-bold text-[#07152E]">{{ withdrawals_count }}</p>
+            <p class="mt-1 text-[10px] text-slate-500">Withdrawal transactions</p>
+        </div>
+
+        <div class="soft-card rounded-xl border border-slate-200 bg-white p-3.5 sm:p-4">
+            <div class="flex items-center justify-between gap-2">
+                <p class="text-[10px] font-medium uppercase tracking-wide text-slate-500">Investments</p>
+                <i data-lucide="briefcase-business" class="h-4 w-4 text-[#0B3B8F]"></i>
+            </div>
+            <p class="mt-2 text-xl font-bold text-[#07152E]">{{ investments_count }}</p>
+            <p class="mt-1 text-[10px] text-slate-500">Investment transactions</p>
+        </div>
+    </div>
+
+    <!-- Filters UI -->
+    <div class="soft-card rounded-xl border border-slate-200 bg-white p-3.5 sm:p-4">
+        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <label class="relative block sm:col-span-2 lg:col-span-1">
+                <span class="sr-only">Search transactions</span>
+                <i data-lucide="search"
+                   class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"></i>
+                <input type="search"
+                       id="transactionSearch"
+                       placeholder="Search reference or type..."
+                       class="h-10 w-full rounded-lg border border-slate-200 bg-[#F8FAFD] pl-9 pr-3 text-xs text-[#07152E] outline-none transition placeholder:text-slate-400 focus:border-[#0B3B8F] focus:ring-2 focus:ring-blue-100">
+            </label>
+
+            <label>
+                <span class="sr-only">Filter by transaction type</span>
+                <select id="transactionType"
+                        class="h-10 w-full rounded-lg border border-slate-200 bg-[#F8FAFD] px-3 text-xs text-slate-700 outline-none focus:border-[#0B3B8F]">
+                    <option value="">All transaction types</option>
+                    <option value="deposit">Deposit</option>
+                    <option value="withdrawal">Withdrawal</option>
+                    <option value="investment">Investment</option>
+                    <option value="profit">Profit</option>
+                </select>
+            </label>
+
+            <label>
+                <span class="sr-only">Filter by transaction status</span>
+                <select id="transactionStatus"
+                        class="h-10 w-full rounded-lg border border-slate-200 bg-[#F8FAFD] px-3 text-xs text-slate-700 outline-none focus:border-[#0B3B8F]">
+                    <option value="">All statuses</option>
+                    <option value="completed">Completed</option>
+                    <option value="pending">Pending</option>
+                    <option value="failed">Failed</option>
+                </select>
+            </label>
+        </div>
+        <p class="mt-2 text-[10px] text-slate-400">
+            Filters apply to transactions displayed on this page.
         </p>
+    </div>
 
-        <h1 class="text-2xl sm:text-3xl font-bold tracking-tight mt-1.5">
-            Transactions
-        </h1>
+    <!-- Desktop Table -->
+    <div class="soft-card hidden overflow-hidden rounded-xl border border-slate-200 bg-white lg:block">
+        <div class="flex items-center justify-between border-b border-slate-100 px-4 py-3">
+            <h2 class="text-sm font-semibold text-[#07152E]">All Transactions</h2>
+            <span class="text-[10px] text-slate-500">Latest activity first</span>
+        </div>
 
-        <p class="text-xs sm:text-sm text-zinc-500 mt-1">
-            View your deposits, withdrawals, investments and trades.
+        <div class="overflow-x-auto">
+            <table class="w-full min-w-[760px] text-left">
+                <thead class="bg-[#F5F8FC]">
+                    <tr>
+                        <th class="px-4 py-3 text-[10px] font-semibold uppercase tracking-wide text-slate-500">Reference</th>
+                        <th class="px-4 py-3 text-[10px] font-semibold uppercase tracking-wide text-slate-500">Type</th>
+                        <th class="px-4 py-3 text-[10px] font-semibold uppercase tracking-wide text-slate-500">Amount</th>
+                        <th class="px-4 py-3 text-[10px] font-semibold uppercase tracking-wide text-slate-500">Status</th>
+                        <th class="px-4 py-3 text-[10px] font-semibold uppercase tracking-wide text-slate-500">Date</th>
+                        <th class="px-4 py-3 text-right text-[10px] font-semibold uppercase tracking-wide text-slate-500">Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="transactionTableBody" class="divide-y divide-slate-100">
+                    {% for transaction in transactions %}
+                    <tr class="transaction-row transition hover:bg-blue-50/40"
+                        data-reference="{{ transaction.reference|default:''|lower }}"
+                        data-type="{{ transaction.transaction_type|lower }}"
+                        data-status="{{ transaction.status|lower }}">
+                        <td class="whitespace-nowrap px-4 py-3.5 text-xs font-semibold text-[#07152E]">
+                            {{ transaction.reference|default:"—" }}
+                        </td>
+                        <td class="px-4 py-3.5">
+                            <span class="inline-flex items-center gap-2 text-xs capitalize text-slate-600">
+                                {% if transaction.transaction_type == "deposit" %}
+                                    <i data-lucide="arrow-down-left" class="h-3.5 w-3.5 text-emerald-600"></i>
+                                {% elif transaction.transaction_type == "withdrawal" %}
+                                    <i data-lucide="arrow-up-right" class="h-3.5 w-3.5 text-[#E53935]"></i>
+                                {% else %}
+                                    <i data-lucide="receipt-text" class="h-3.5 w-3.5 text-[#0B3B8F]"></i>
+                                {% endif %}
+                                {{ transaction.transaction_type }}
+                            </span>
+                        </td>
+                        <td class="whitespace-nowrap px-4 py-3.5 text-xs font-semibold text-[#07152E]">
+                            ${{ transaction.amount|floatformat:2|intcomma }}
+                        </td>
+                        <td class="px-4 py-3.5">
+                            {% if transaction.status == "completed" %}
+                                <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2 py-1 text-[10px] font-medium text-emerald-700">
+                                    <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>Completed
+                                </span>
+                            {% elif transaction.status == "pending" %}
+                                <span class="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-2 py-1 text-[10px] font-medium text-amber-700">
+                                    <span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span>Pending
+                                </span>
+                            {% else %}
+                                <span class="inline-flex items-center gap-1.5 rounded-full bg-red-50 px-2 py-1 text-[10px] font-medium text-red-700">
+                                    <span class="h-1.5 w-1.5 rounded-full bg-[#E53935]"></span>Failed
+                                </span>
+                            {% endif %}
+                        </td>
+                        <td class="whitespace-nowrap px-4 py-3.5 text-xs text-slate-500">
+                            {{ transaction.created_at|date:"M d, Y" }}
+                        </td>
+                        <td class="whitespace-nowrap px-4 py-3.5 text-right">
+                            <a href="{% url 'transaction_detail' transaction.id %}"
+                               class="inline-flex items-center gap-1 text-xs font-semibold text-[#0B3B8F] transition hover:text-[#124EA8]">
+                                Details <i data-lucide="arrow-up-right" class="h-3.5 w-3.5"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="px-4 py-12 text-center">
+                            <i data-lucide="receipt-text" class="mx-auto h-8 w-8 text-slate-300"></i>
+                            <p class="mt-3 text-sm font-semibold text-[#07152E]">No transactions yet</p>
+                            <p class="mt-1 text-xs text-slate-500">Your account activity will appear here.</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <p id="desktopNoMatches" class="hidden px-4 py-8 text-center text-xs text-slate-500">
+            No transactions match your filters.
         </p>
-
     </div>
 
-
-    <a
-        href="{% url 'dashboard' %}"
-        class="h-10 sm:h-11 px-4 rounded-xl
-               bg-red-600 hover:bg-red-700
-               transition
-               flex items-center justify-center gap-2
-               text-xs sm:text-sm font-semibold">
-
-        <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
-
-        Dashboard
-
-    </a>
-
-</div>
-
-
-
-<!-- ================================================= -->
-<!-- SUMMARY -->
-<!-- ================================================= -->
-
-<div class="grid grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-4">
-
-
-    <div class="glass rounded-2xl border border-zinc-800 p-4 sm:p-5">
-
-        <div class="flex items-center justify-between gap-2">
-
-            <p class="text-[10px] sm:text-xs uppercase tracking-wide text-zinc-500">
-                Total
-            </p>
-
-            <i data-lucide="layers-3" class="w-4 h-4 text-zinc-600"></i>
-
-        </div>
-
-        <h2 class="text-xl sm:text-2xl font-bold mt-3">
-            {{ transactions.count }}
-        </h2>
-
-    </div>
-
-
-    <div class="glass rounded-2xl border border-zinc-800 p-4 sm:p-5">
-
-        <div class="flex items-center justify-between gap-2">
-
-            <p class="text-[10px] sm:text-xs uppercase tracking-wide text-zinc-500">
-                Deposits
-            </p>
-
-            <i data-lucide="arrow-down-to-line" class="w-4 h-4 text-green-500"></i>
-
-        </div>
-
-        <h2 class="text-xl sm:text-2xl font-bold text-green-500 mt-3">
-            {{ deposits_count }}
-        </h2>
-
-    </div>
-
-
-    <div class="glass rounded-2xl border border-zinc-800 p-4 sm:p-5">
-
-        <div class="flex items-center justify-between gap-2">
-
-            <p class="text-[10px] sm:text-xs uppercase tracking-wide text-zinc-500">
-                Withdrawals
-            </p>
-
-            <i data-lucide="arrow-up-from-line" class="w-4 h-4 text-red-500"></i>
-
-        </div>
-
-        <h2 class="text-xl sm:text-2xl font-bold text-red-500 mt-3">
-            {{ withdrawals_count }}
-        </h2>
-
-    </div>
-
-
-    <div class="glass rounded-2xl border border-zinc-800 p-4 sm:p-5">
-
-        <div class="flex items-center justify-between gap-2">
-
-            <p class="text-[10px] sm:text-xs uppercase tracking-wide text-zinc-500">
-                Investments
-            </p>
-
-            <i data-lucide="briefcase-business" class="w-4 h-4 text-blue-500"></i>
-
-        </div>
-
-        <h2 class="text-xl sm:text-2xl font-bold text-blue-500 mt-3">
-            {{ investments_count }}
-        </h2>
-
-    </div>
-
-</div>
-
-
-
-<!-- ================================================= -->
-<!-- FILTERS -->
-<!-- ================================================= -->
-
-<div class="glass rounded-2xl border border-zinc-800 p-4 sm:p-5">
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-
-
-        <!-- SEARCH -->
-
-        <div class="relative sm:col-span-2 lg:col-span-1">
-
-            <i
-                data-lucide="search"
-                class="absolute left-3.5 top-1/2 -translate-y-1/2
-                       w-4 h-4 text-zinc-600">
-            </i>
-
-            <input
-                type="text"
-                placeholder="Search transaction..."
-                class="w-full
-                       h-11
-                       rounded-xl
-                       bg-zinc-950
-                       border border-zinc-800
-                       focus:border-red-600
-                       outline-none
-                       pl-10
-                       pr-4
-                       text-xs sm:text-sm
-                       transition">
-
-        </div>
-
-
-        <!-- TYPE -->
-
-        <select
-            class="h-11
-                   rounded-xl
-                   bg-zinc-950
-                   border border-zinc-800
-                   px-3.5
-                   text-xs sm:text-sm
-                   focus:border-red-600
-                   outline-none
-                   transition">
-
-            <option>All Types</option>
-            <option>Deposit</option>
-            <option>Withdrawal</option>
-            <option>Investment</option>
-            <option>Profit</option>
-
-        </select>
-
-
-        <!-- STATUS -->
-
-        <select
-            class="h-11
-                   rounded-xl
-                   bg-zinc-950
-                   border border-zinc-800
-                   px-3.5
-                   text-xs sm:text-sm
-                   focus:border-red-600
-                   outline-none
-                   transition">
-
-            <option>All Status</option>
-            <option>Completed</option>
-            <option>Pending</option>
-            <option>Failed</option>
-
-        </select>
-
-    </div>
-
-</div>
-
-
-
-<!-- ================================================= -->
-<!-- DESKTOP TABLE -->
-<!-- ================================================= -->
-
-<div class="hidden lg:block glass rounded-2xl border border-zinc-800 overflow-hidden">
-
-    <div class="overflow-x-auto">
-
-        <table class="w-full min-w-[750px]">
-
-            <thead class="bg-zinc-950/70">
-
-                <tr class="text-left">
-
-                    <th class="px-5 py-3.5 text-[10px] uppercase tracking-wide text-zinc-500">
-                        Reference
-                    </th>
-
-                    <th class="px-5 py-3.5 text-[10px] uppercase tracking-wide text-zinc-500">
-                        Type
-                    </th>
-
-                    <th class="px-5 py-3.5 text-[10px] uppercase tracking-wide text-zinc-500">
-                        Amount
-                    </th>
-
-                    <th class="px-5 py-3.5 text-[10px] uppercase tracking-wide text-zinc-500">
-                        Status
-                    </th>
-
-                    <th class="px-5 py-3.5 text-[10px] uppercase tracking-wide text-zinc-500">
-                        Date
-                    </th>
-
-                    <th class="px-5 py-3.5 text-right text-[10px] uppercase tracking-wide text-zinc-500">
-                        Action
-                    </th>
-
-                </tr>
-
-            </thead>
-
-
-            <tbody>
-
-                {% for transaction in transactions %}
-
-                <tr class="border-t border-zinc-800 hover:bg-zinc-900/40 transition">
-
-                    <td class="px-5 py-4 text-xs font-semibold">
-                        {{ transaction.reference }}
-                    </td>
-
-
-                    <td class="px-5 py-4 text-xs capitalize text-zinc-300">
-                        {{ transaction.transaction_type }}
-                    </td>
-
-
-                    <td class="px-5 py-4 text-xs font-semibold">
-                        ${{ transaction.amount }}
-                    </td>
-
-
-                    <td class="px-5 py-4">
-
-                        {% if transaction.status == "completed" %}
-
-                        <span class="inline-flex px-2.5 py-1 rounded-full bg-green-500/15 text-green-400 text-[10px] font-medium">
-                            Completed
-                        </span>
-
-                        {% elif transaction.status == "pending" %}
-
-                        <span class="inline-flex px-2.5 py-1 rounded-full bg-yellow-500/15 text-yellow-400 text-[10px] font-medium">
-                            Pending
-                        </span>
-
-                        {% else %}
-
-                        <span class="inline-flex px-2.5 py-1 rounded-full bg-red-500/15 text-red-400 text-[10px] font-medium">
-                            Failed
-                        </span>
-
-                        {% endif %}
-
-                    </td>
-
-
-                    <td class="px-5 py-4 text-xs text-zinc-500">
-                        {{ transaction.created_at|date:"M d, Y" }}
-                    </td>
-
-
-                    <td class="px-5 py-4 text-right">
-
-                        <a
-                            href="{% url 'transaction_detail' transaction.id %}"
-                            class="inline-flex items-center gap-1.5
-                                   text-xs font-medium
-                                   text-red-500 hover:text-red-400
-                                   transition">
-
-                            View
-
-                            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
-
-                        </a>
-
-                    </td>
-
-                </tr>
-
-
-                {% empty %}
-
-                <tr>
-
-                    <td
-                        colspan="6"
-                        class="py-14 text-center text-xs sm:text-sm text-zinc-500">
-
-                        No transactions found.
-
-                    </td>
-
-                </tr>
-
-                {% endfor %}
-
-            </tbody>
-
-        </table>
-
-    </div>
-
-</div>
-
-
-
-<!-- ================================================= -->
-<!-- MOBILE / TABLET CARDS -->
-<!-- ================================================= -->
-
-<div class="lg:hidden space-y-3">
-
-    {% for transaction in transactions %}
-
-    <div class="glass rounded-2xl border border-zinc-800 p-4 sm:p-5">
-
-
-        <div class="flex items-start justify-between gap-3">
-
-
-            <div class="min-w-0">
-
-                <div class="flex items-center gap-2">
-
-                    <div
-                        class="w-8 h-8 rounded-lg
-                               bg-zinc-900
-                               flex items-center justify-center
-                               shrink-0">
-
+    <!-- Mobile and Tablet Cards -->
+    <div id="transactionCards" class="space-y-3 lg:hidden">
+        {% for transaction in transactions %}
+        <article class="transaction-card soft-card rounded-xl border border-slate-200 bg-white p-3.5 sm:p-4"
+                 data-reference="{{ transaction.reference|default:''|lower }}"
+                 data-type="{{ transaction.transaction_type|lower }}"
+                 data-status="{{ transaction.status|lower }}">
+            <div class="flex items-start justify-between gap-3">
+                <div class="flex min-w-0 items-center gap-2.5">
+                    <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-50">
                         {% if transaction.transaction_type == "deposit" %}
-
-                        <i data-lucide="arrow-down-to-line" class="w-4 h-4 text-green-500"></i>
-
+                            <i data-lucide="arrow-down-left" class="h-4 w-4 text-emerald-600"></i>
                         {% elif transaction.transaction_type == "withdrawal" %}
-
-                        <i data-lucide="arrow-up-from-line" class="w-4 h-4 text-red-500"></i>
-
+                            <i data-lucide="arrow-up-right" class="h-4 w-4 text-[#E53935]"></i>
                         {% else %}
-
-                        <i data-lucide="receipt" class="w-4 h-4 text-zinc-500"></i>
-
+                            <i data-lucide="receipt-text" class="h-4 w-4 text-[#0B3B8F]"></i>
                         {% endif %}
-
                     </div>
-
-
                     <div class="min-w-0">
-
-                        <h3 class="text-xs sm:text-sm font-semibold capitalize truncate">
+                        <h3 class="truncate text-xs font-semibold capitalize text-[#07152E]">
                             {{ transaction.transaction_type }}
                         </h3>
-
-                        <p class="text-[10px] text-zinc-600 mt-0.5 truncate">
-                            {{ transaction.reference }}
+                        <p class="mt-0.5 truncate text-[10px] text-slate-500">
+                            {{ transaction.reference|default:"No reference" }}
                         </p>
-
                     </div>
-
                 </div>
 
+                {% if transaction.status == "completed" %}
+                    <span class="shrink-0 rounded-full bg-emerald-50 px-2 py-1 text-[9px] font-medium text-emerald-700">Completed</span>
+                {% elif transaction.status == "pending" %}
+                    <span class="shrink-0 rounded-full bg-amber-50 px-2 py-1 text-[9px] font-medium text-amber-700">Pending</span>
+                {% else %}
+                    <span class="shrink-0 rounded-full bg-red-50 px-2 py-1 text-[9px] font-medium text-red-700">Failed</span>
+                {% endif %}
             </div>
 
-
-            {% if transaction.status == "completed" %}
-
-            <span class="shrink-0 px-2 py-0.5 rounded-full bg-green-500/15 text-green-400 text-[9px] font-medium">
-                Completed
-            </span>
-
-            {% elif transaction.status == "pending" %}
-
-            <span class="shrink-0 px-2 py-0.5 rounded-full bg-yellow-500/15 text-yellow-400 text-[9px] font-medium">
-                Pending
-            </span>
-
-            {% else %}
-
-            <span class="shrink-0 px-2 py-0.5 rounded-full bg-red-500/15 text-red-400 text-[9px] font-medium">
-                Failed
-            </span>
-
-            {% endif %}
-
-        </div>
-
-
-
-        <div class="flex items-end justify-between gap-3 mt-4">
-
-
-            <div>
-
-                <p class="text-[10px] uppercase tracking-wide text-zinc-600">
-                    Amount
-                </p>
-
-                <p class="text-base sm:text-lg font-bold mt-1">
-                    ${{ transaction.amount }}
-                </p>
-
+            <div class="mt-4 flex items-end justify-between gap-3 border-t border-slate-100 pt-3">
+                <div>
+                    <p class="text-[10px] uppercase tracking-wide text-slate-500">Amount</p>
+                    <p class="mt-1 text-base font-bold text-[#07152E]">
+                        ${{ transaction.amount|floatformat:2|intcomma }}
+                    </p>
+                </div>
+                <div class="text-right">
+                    <p class="text-[10px] uppercase tracking-wide text-slate-500">Date</p>
+                    <p class="mt-1 text-[11px] text-slate-600">
+                        {{ transaction.created_at|date:"M d, Y" }}
+                    </p>
+                </div>
             </div>
 
-
-            <div class="text-right">
-
-                <p class="text-[10px] uppercase tracking-wide text-zinc-600">
-                    Date
-                </p>
-
-                <p class="text-[11px] sm:text-xs text-zinc-400 mt-1">
-                    {{ transaction.created_at|date:"M d, Y" }}
-                </p>
-
-            </div>
-
+            <a href="{% url 'transaction_detail' transaction.id %}"
+               class="mt-3 flex h-9 items-center justify-center gap-2 rounded-lg border border-slate-200 text-xs font-semibold text-[#0B3B8F] transition hover:border-[#0B3B8F] hover:bg-blue-50">
+                View Transaction <i data-lucide="arrow-right" class="h-3.5 w-3.5"></i>
+            </a>
+        </article>
+        {% empty %}
+        <div class="soft-card rounded-xl border border-slate-200 bg-white px-4 py-10 text-center">
+            <i data-lucide="receipt-text" class="mx-auto h-8 w-8 text-slate-300"></i>
+            <h3 class="mt-3 text-sm font-semibold text-[#07152E]">No transactions yet</h3>
+            <p class="mt-1 text-xs text-slate-500">Your transaction history will appear here.</p>
         </div>
+        {% endfor %}
 
-
-
-        <a
-            href="{% url 'transaction_detail' transaction.id %}"
-            class="mt-4
-                   h-10
-                   rounded-xl
-                   border border-zinc-800
-                   hover:border-red-600
-                   hover:bg-red-600/5
-                   transition
-                   flex items-center justify-center gap-2
-                   text-xs
-                   font-medium">
-
-            View Details
-
-            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-
-        </a>
-
-    </div>
-
-
-    {% empty %}
-
-    <div class="glass rounded-2xl border border-zinc-800 p-10 text-center">
-
-        <div
-            class="w-12 h-12 mx-auto
-                   rounded-xl
-                   bg-zinc-900
-                   flex items-center justify-center">
-
-            <i
-                data-lucide="receipt-text"
-                class="w-6 h-6 text-zinc-600">
-            </i>
-
-        </div>
-
-        <h3 class="text-base sm:text-lg font-bold mt-4">
-            No Transactions
-        </h3>
-
-        <p class="text-xs sm:text-sm text-zinc-500 mt-1.5">
-            Your transaction history will appear here.
+        <p id="mobileNoMatches" class="hidden rounded-xl border border-slate-200 bg-white px-4 py-8 text-center text-xs text-slate-500">
+            No transactions match your filters.
         </p>
-
     </div>
 
-    {% endfor %}
-
-</div>
-
-
-
-<!-- ================================================= -->
-<!-- PAGINATION -->
-<!-- ================================================= -->
-
-{% if transactions.has_other_pages %}
-
-<div class="flex justify-center pt-1">
-
-    <div class="flex items-center gap-2">
-
+    <!-- Pagination -->
+    {% if transactions.has_other_pages %}
+    <nav aria-label="Transaction pages" class="flex items-center justify-center gap-2 pt-1">
         {% if transactions.has_previous %}
-
-        <a
-            href="?page={{ transactions.previous_page_number }}"
-            class="w-9 h-9 sm:w-10 sm:h-10
-                   rounded-xl
-                   border border-zinc-800
-                   bg-zinc-900
-                   hover:border-red-600
-                   transition
-                   flex items-center justify-center">
-
-            <i data-lucide="chevron-left" class="w-4 h-4"></i>
-
+        <a href="?page={{ transactions.previous_page_number }}"
+           aria-label="Previous page"
+           class="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-600 transition hover:border-[#0B3B8F] hover:text-[#0B3B8F]">
+            <i data-lucide="chevron-left" class="h-4 w-4"></i>
         </a>
-
         {% endif %}
 
-
-        <span
-            class="min-w-9 h-9 sm:min-w-10 sm:h-10
-                   px-3
-                   rounded-xl
-                   bg-red-600
-                   flex items-center justify-center
-                   text-xs sm:text-sm
-                   font-semibold">
-
+        <span class="flex h-9 min-w-9 items-center justify-center rounded-lg bg-[#0B3B8F] px-3 text-xs font-semibold text-white">
             {{ transactions.number }}
-
         </span>
 
-
         {% if transactions.has_next %}
-
-        <a
-            href="?page={{ transactions.next_page_number }}"
-            class="w-9 h-9 sm:w-10 sm:h-10
-                   rounded-xl
-                   border border-zinc-800
-                   bg-zinc-900
-                   hover:border-red-600
-                   transition
-                   flex items-center justify-center">
-
-            <i data-lucide="chevron-right" class="w-4 h-4"></i>
-
+        <a href="?page={{ transactions.next_page_number }}"
+           aria-label="Next page"
+           class="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-600 transition hover:border-[#0B3B8F] hover:text-[#0B3B8F]">
+            <i data-lucide="chevron-right" class="h-4 w-4"></i>
         </a>
-
         {% endif %}
-
-    </div>
-
-</div>
-
-{% endif %}
-
+    </nav>
+    {% endif %}
 
 </section>
+{% endblock %}
 
+{% block scripts %}
+<script>
+(function () {
+    function initTransactionHistory() {
+        const search = document.getElementById('transactionSearch');
+        const typeFilter = document.getElementById('transactionType');
+        const statusFilter = document.getElementById('transactionStatus');
+
+        if (!search || !typeFilter || !statusFilter) return;
+
+        const rows = Array.from(document.querySelectorAll('.transaction-row'));
+        const cards = Array.from(document.querySelectorAll('.transaction-card'));
+        const desktopEmpty = document.getElementById('desktopNoMatches');
+        const mobileEmpty = document.getElementById('mobileNoMatches');
+
+        function applyFilters() {
+            const query = search.value.trim().toLowerCase();
+            const type = typeFilter.value.toLowerCase();
+            const status = statusFilter.value.toLowerCase();
+
+            function matches(item) {
+                const reference = item.dataset.reference || '';
+                const itemType = item.dataset.type || '';
+                const itemStatus = item.dataset.status || '';
+
+                return (!query || reference.includes(query) || itemType.includes(query))
+                    && (!type || itemType === type)
+                    && (!status || itemStatus === status);
+            }
+
+            let visibleRows = 0;
+            let visibleCards = 0;
+
+            rows.forEach(function (row) {
+                const show = matches(row);
+                row.classList.toggle('hidden', !show);
+                if (show) visibleRows++;
+            });
+
+            cards.forEach(function (card) {
+                const show = matches(card);
+                card.classList.toggle('hidden', !show);
+                if (show) visibleCards++;
+            });
+
+            if (desktopEmpty) {
+                desktopEmpty.classList.toggle('hidden', rows.length === 0 || visibleRows > 0);
+            }
+            if (mobileEmpty) {
+                mobileEmpty.classList.toggle('hidden', cards.length === 0 || visibleCards > 0);
+            }
+        }
+
+        search.addEventListener('input', applyFilters);
+        typeFilter.addEventListener('change', applyFilters);
+        statusFilter.addEventListener('change', applyFilters);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initTransactionHistory);
+    } else {
+        initTransactionHistory();
+    }
+})();
+</script>
 {% endblock %}

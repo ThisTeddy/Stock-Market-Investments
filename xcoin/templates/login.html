@@ -1,151 +1,325 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<title>
+    <title>Login | Stock Market Investment</title>
 
-Login | XCoin
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Alpine -->
+    <script
+        defer
+        src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0B3B8F',
+                        primary2: '#124EA8',
+                        accent: '#E53935',
+                        ink: '#07152E',
+                        soft: '#F5F8FC'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
 
-<script src="https://cdn.tailwindcss.com"></script>
+    <style>
 
-<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        * {
+            box-sizing: border-box;
+            font-family: Inter, sans-serif;
+        }
 
-<style>
+        body {
+            margin: 0;
+            background: #ffffff;
+            color: #07152E;
+        }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Inter,sans-serif;
-}
+        .input {
+            width: 100%;
+            padding: 11px 13px;
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 9px;
+            color: #07152E;
+            font-size: 13px;
+            outline: none;
+            transition: .2s ease;
+        }
 
-body{
-background:#09090B;
-color:white;
-overflow-x:hidden;
-}
+        .input::placeholder {
+            color: #94A3B8;
+        }
 
-.glass{
-background:rgba(255,255,255,.05);
-backdrop-filter:blur(20px);
-border:1px solid rgba(255,255,255,.08);
-}
+        .input:focus {
+            background: #ffffff;
+            border-color: #0B3B8F;
+            box-shadow: 0 0 0 3px rgba(11, 59, 143, .08);
+        }
 
-.input{
-width:100%;
-padding:15px;
-background:#18181B;
-border:1px solid #27272A;
-border-radius:14px;
-color:white;
-outline:none;
-transition:.3s;
-}
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: #0B3B8F;
+            color: white;
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: 700;
+            transition: .2s ease;
+        }
 
-.input:focus{
-border-color:#DC2626;
-}
+        .btn:hover {
+            background: #124EA8;
+        }
 
-.btn{
-width:100%;
-padding:15px;
-background:#DC2626;
-border-radius:14px;
-font-weight:700;
-transition:.3s;
-}
+        .grid-bg {
+            background-image:
+                linear-gradient(
+                    rgba(11, 59, 143, .04) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(11, 59, 143, .04) 1px,
+                    transparent 1px
+                );
 
-.btn:hover{
-background:#ef4444;
-}
+            background-size: 32px 32px;
+        }
 
-</style>
+    </style>
 
 </head>
+
 
 <body>
 
 <div class="min-h-screen grid lg:grid-cols-2">
 
-    <!-- Left Side -->
 
-    <div class="hidden lg:flex items-center justify-center relative overflow-hidden">
+    <!-- ===================================================== -->
+    <!-- LEFT SIDE -->
+    <!-- ===================================================== -->
 
-        <div class="absolute w-96 h-96 rounded-full bg-red-600/20 blur-[120px]"></div>
+    <div class="hidden lg:flex relative overflow-hidden bg-soft grid-bg">
 
-        <div class="relative z-10 max-w-lg px-10">
+        <!-- Decorative glow -->
+        <div class="absolute -top-24 -left-24 w-80 h-80 bg-blue-200/50 rounded-full blur-3xl"></div>
 
-            <p class="uppercase tracking-[6px] text-red-500 font-semibold">
+        <div class="absolute -bottom-24 right-0 w-72 h-72 bg-red-100/50 rounded-full blur-3xl"></div>
 
-                NEXT GENERATION INVESTING
 
-            </p>
+        <div class="relative z-10 flex flex-col justify-center max-w-xl px-12 xl:px-16">
 
-            <h1 class="text-6xl font-black mt-6 leading-tight">
+            <!-- Brand -->
 
-                Trade
+            <a href="/" class="flex items-center gap-2.5 mb-12">
 
-                <span class="text-red-500">
+                <div class="w-9 h-9 rounded-lg bg-primary flex items-center justify-center">
 
-                    Crypto,
-
-                </span>
-
-                Stocks & Futures.
-
-            </h1>
-
-            <p class="text-zinc-400 mt-8 text-lg leading-8">
-
-                Buy Bitcoin, Ethereum, Stocks, ETFs and Investment Plans from one secure platform.
-
-            </p>
-
-            <div class="mt-10 flex gap-10">
-
-                <div>
-
-                    <h2 class="text-3xl font-black">
-
-                        150K+
-
-                    </h2>
-
-                    <p class="text-zinc-500">
-
-                        Investors
-
-                    </p>
+                    <span class="text-white text-sm font-extrabold">
+                        SM
+                    </span>
 
                 </div>
 
                 <div>
 
-                    <h2 class="text-3xl font-black">
+                    <div class="text-[14px] font-bold text-ink">
+                        Stock Market
+                    </div>
 
-                        $1.8B
+                    <div class="text-[10px] text-slate-400 -mt-0.5">
+                        Investment
+                    </div>
 
-                    </h2>
+                </div>
 
-                    <p class="text-zinc-500">
+            </a>
 
-                        Trading Volume
 
-                    </p>
+            <!-- Eyebrow -->
+
+            <p class="uppercase tracking-[3px] text-primary text-[10px] font-bold">
+                SMARTER INVESTING
+            </p>
+
+
+            <!-- Heading -->
+
+            <h1 class="text-[42px] xl:text-[48px] font-extrabold tracking-[-0.04em] leading-[1.06] mt-4 max-w-lg">
+
+                Invest smarter.
+
+                <span class="text-primary">
+                    Grow stronger.
+                </span>
+
+            </h1>
+
+
+            <!-- Description -->
+
+            <p class="text-[14px] leading-6 text-slate-500 mt-5 max-w-md">
+
+                Access stocks, crypto, ETFs, forex and investment plans
+                from one secure platform.
+
+            </p>
+
+
+            <!-- Stats -->
+
+            <div class="flex items-center gap-7 mt-8 pt-6 border-t border-slate-200 max-w-md">
+
+                <div>
+
+                    <div class="text-xl font-bold text-ink">
+                        150K+
+                    </div>
+
+                    <div class="text-[10px] text-slate-400 mt-0.5">
+                        Investors
+                    </div>
+
+                </div>
+
+
+                <div class="w-px h-7 bg-slate-200"></div>
+
+
+                <div>
+
+                    <div class="text-xl font-bold text-ink">
+                        120+
+                    </div>
+
+                    <div class="text-[10px] text-slate-400 mt-0.5">
+                        Assets
+                    </div>
+
+                </div>
+
+
+                <div class="w-px h-7 bg-slate-200"></div>
+
+
+                <div>
+
+                    <div class="text-xl font-bold text-ink">
+                        24/7
+                    </div>
+
+                    <div class="text-[10px] text-slate-400 mt-0.5">
+                        Market Access
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Mini market card -->
+
+            <div class="mt-8 bg-white border border-slate-200 rounded-xl p-4 max-w-md shadow-sm">
+
+                <div class="flex items-center justify-between mb-3">
+
+                    <span class="text-[10px] font-semibold text-slate-500">
+                        MARKET OVERVIEW
+                    </span>
+
+                    <span class="flex items-center gap-1 text-[9px] text-green-600 font-semibold">
+
+                        <span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
+
+                        Markets Open
+
+                    </span>
+
+                </div>
+
+
+                <div class="grid grid-cols-3 gap-3">
+
+                    <div>
+
+                        <div class="text-[10px] text-slate-400">
+                            BTC
+                        </div>
+
+                        <div class="text-[12px] font-bold mt-1">
+                            $62,420
+                        </div>
+
+                        <div class="text-[9px] text-green-600 mt-0.5">
+                            +4.82%
+                        </div>
+
+                    </div>
+
+
+                    <div>
+
+                        <div class="text-[10px] text-slate-400">
+                            TSLA
+                        </div>
+
+                        <div class="text-[12px] font-bold mt-1">
+                            $248.40
+                        </div>
+
+                        <div class="text-[9px] text-green-600 mt-0.5">
+                            +2.14%
+                        </div>
+
+                    </div>
+
+
+                    <div>
+
+                        <div class="text-[10px] text-slate-400">
+                            GOLD
+                        </div>
+
+                        <div class="text-[12px] font-bold mt-1">
+                            $2,642
+                        </div>
+
+                        <div class="text-[9px] text-green-600 mt-0.5">
+                            +1.36%
+                        </div>
+
+                    </div>
 
                 </div>
 
@@ -155,105 +329,250 @@ background:#ef4444;
 
     </div>
 
-    <!-- Right Side -->
 
-    <div class="flex items-center justify-center p-6">
 
-        <div class="glass rounded-3xl w-full max-w-md p-8">
+    <!-- ===================================================== -->
+    <!-- RIGHT SIDE -->
+    <!-- ===================================================== -->
 
-            <div class="text-center">
+    <div class="flex items-center justify-center px-5 py-8 sm:px-8">
 
-                <div class="w-16 h-16 rounded-2xl bg-red-600 mx-auto flex items-center justify-center text-3xl font-black">
+        <div class="w-full max-w-[390px]">
 
-                    X
 
-                </div>
+            <!-- Mobile Logo -->
 
-                <h2 class="text-3xl font-black mt-5">
+            <div class="lg:hidden flex justify-center mb-8">
 
-                    Welcome Back
+                <a href="/" class="flex items-center gap-2.5">
 
-                </h2>
+                    <div class="w-9 h-9 rounded-lg bg-primary flex items-center justify-center">
 
-                <p class="text-zinc-500 mt-2">
+                        <span class="text-white text-sm font-extrabold">
+                            SM
+                        </span>
 
-                    Login to your XCoin account
+                    </div>
 
-                </p>
+                    <div class="text-left">
 
-            </div>
+                        <div class="text-[14px] font-bold text-ink">
+                            Stock Market
+                        </div>
 
-            {% if messages %}
+                        <div class="text-[10px] text-slate-400 -mt-0.5">
+                            Investment
+                        </div>
 
-                {% for message in messages %}
-
-                <div class="mt-5 bg-red-600/20 border border-red-600 rounded-xl p-4">
-
-                    {{ message }}
-
-                </div>
-
-                {% endfor %}
-
-            {% endif %}
-
-            <form method="POST" class="mt-8 space-y-5">
-
-                {% csrf_token %}
-
-                <div>
-
-                    <label class="block mb-2 text-zinc-400">
-
-                        Email Address
-
-                    </label>
-
-                    <input
-                    type="email"
-                    name="email"
-                    class="input"
-                    placeholder="Enter your email"
-                    required>
-
-                </div>
-
-                <div>
-
-                    <label class="block mb-2 text-zinc-400">
-
-                        Password
-
-                    </label>
-
-                    <input
-                    type="password"
-                    name="password"
-                    class="input"
-                    placeholder="Enter your password"
-                    required>
-
-                </div>
-
-                <button class="btn">
-
-                    Login
-
-                </button>
-
-            </form>
-
-            <p class="text-center mt-8 text-zinc-500">
-
-                Don't have an account?
-
-                <a href="{% url 'register' %}" class="text-red-500">
-
-                    Create Account
+                    </div>
 
                 </a>
 
-            </p>
+            </div>
+
+
+
+            <!-- Login Card -->
+
+            <div class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-7 shadow-[0_8px_35px_rgba(7,21,46,.06)]">
+
+
+                <!-- Header -->
+
+                <div class="mb-6">
+
+                    <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center mb-4">
+
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="18"
+                            height="18"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="text-primary"
+                        >
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                            <polyline points="10 17 15 12 10 7"/>
+                            <line x1="15" x2="3" y1="12" y2="12"/>
+                        </svg>
+
+                    </div>
+
+
+                    <h2 class="text-[25px] font-extrabold tracking-[-0.03em] text-ink">
+                        Welcome back
+                    </h2>
+
+                    <p class="text-[12px] text-slate-500 mt-1">
+                        Login to your investment account.
+                    </p>
+
+                </div>
+
+
+
+                <!-- Messages -->
+
+                {% if messages %}
+
+                    {% for message in messages %}
+
+                    <div class="mb-5 bg-red-50 border border-red-200 text-red-600 rounded-lg px-3 py-2.5 text-[11px]">
+
+                        {{ message }}
+
+                    </div>
+
+                    {% endfor %}
+
+                {% endif %}
+
+
+
+                <!-- Form -->
+
+                <form method="POST" class="space-y-4">
+
+                    {% csrf_token %}
+
+
+                    <!-- Email -->
+
+                    <div>
+
+                        <label class="block mb-1.5 text-[11px] font-semibold text-slate-600">
+
+                            Email Address
+
+                        </label>
+
+                        <input
+                            type="email"
+                            name="email"
+                            class="input"
+                            placeholder="you@example.com"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- Password -->
+
+                    <div>
+
+                        <div class="flex items-center justify-between mb-1.5">
+
+                            <label class="text-[11px] font-semibold text-slate-600">
+
+                                Password
+
+                            </label>
+
+                            <a
+                                href="#"
+                                class="text-[10px] font-semibold text-primary hover:text-primary2"
+                            >
+                                Forgot password?
+                            </a>
+
+                        </div>
+
+
+                        <input
+                            type="password"
+                            name="password"
+                            class="input"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- Button -->
+
+                    <button
+                        type="submit"
+                        class="btn mt-2"
+                    >
+
+                        Login to Account
+
+                    </button>
+
+                </form>
+
+
+
+                <!-- Divider -->
+
+                <div class="flex items-center gap-3 my-6">
+
+                    <div class="h-px flex-1 bg-slate-200"></div>
+
+                    <span class="text-[9px] text-slate-400 uppercase tracking-wider">
+                        Secure access
+                    </span>
+
+                    <div class="h-px flex-1 bg-slate-200"></div>
+
+                </div>
+
+
+
+                <!-- Register -->
+
+                <p class="text-center text-[11px] text-slate-500">
+
+                    Don't have an account?
+
+                    <a
+                        href="{% url 'register' %}"
+                        class="text-primary font-bold hover:text-primary2"
+                    >
+                        Create Account
+                    </a>
+
+                </p>
+
+
+            </div>
+
+
+            <!-- Security note -->
+
+            <div class="flex items-center justify-center gap-1.5 mt-5">
+
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="text-slate-400"
+                >
+                    <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+
+                <span class="text-[9px] text-slate-400">
+                    Secure and encrypted login
+                </span>
+
+            </div>
 
         </div>
 

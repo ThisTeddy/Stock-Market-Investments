@@ -1,582 +1,297 @@
+
 {% extends "base.html" %}
 
-{% block title %}
-Account Settings
-{% endblock %}
+{% block title %}Account Settings | Stock Market Investment{% endblock %}
 
 {% block content %}
 
-<section class="w-full max-w-[1200px] mx-auto space-y-5 sm:space-y-6">
+<section class="mx-auto w-full max-w-[1200px] space-y-5">
 
+    <!-- HEADER -->
+    <div>
+        <p class="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#0B3B8F]">
+            Account
+        </p>
+        <h1 class="mt-1 text-2xl font-bold tracking-tight text-[#07152E] sm:text-3xl">
+            Account Settings
+        </h1>
+        <p class="mt-1 text-xs text-slate-500 sm:text-sm">
+            Manage your profile, security and account preferences.
+        </p>
+    </div>
 
-<!-- ================================================= -->
-<!-- HEADER -->
-<!-- ================================================= -->
+    <!-- PROFILE INFORMATION -->
+    <div class="soft-card overflow-hidden rounded-2xl border border-slate-200 bg-white">
 
-<div>
-
-    <p class="text-[10px] sm:text-xs uppercase tracking-[0.2em] sm:tracking-[0.3em] text-red-500 font-semibold">
-        Account
-    </p>
-
-    <h1 class="text-2xl sm:text-3xl font-bold tracking-tight mt-1.5">
-        Account Settings
-    </h1>
-
-    <p class="text-xs sm:text-sm text-zinc-500 mt-1">
-        Manage your profile, security and account preferences.
-    </p>
-
-</div>
-
-
-
-<!-- ================================================= -->
-<!-- PROFILE -->
-<!-- ================================================= -->
-
-<div class="glass rounded-2xl border border-zinc-800 overflow-hidden">
-
-    <div class="px-4 sm:px-5 lg:px-6 py-4 border-b border-zinc-800">
-
-        <div class="flex items-center gap-3">
-
-            <div
-                class="w-9 h-9 sm:w-10 sm:h-10
-                       rounded-xl
-                       bg-red-600/10
-                       flex items-center justify-center">
-
-                <i
-                    data-lucide="user"
-                    class="w-4 h-4 sm:w-5 sm:h-5 text-red-500">
-                </i>
-
+        <div class="flex items-center gap-3 border-b border-slate-100 px-4 py-4 sm:px-5">
+            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-[#0B3B8F]">
+                <i data-lucide="user-round" class="h-5 w-5"></i>
             </div>
-
             <div>
-
-                <h2 class="text-sm sm:text-base font-semibold">
+                <h2 class="text-sm font-semibold text-[#07152E] sm:text-base">
                     Profile Information
                 </h2>
-
-                <p class="text-[10px] sm:text-xs text-zinc-500 mt-0.5">
+                <p class="mt-0.5 text-[11px] text-slate-500 sm:text-xs">
                     Update your personal information.
                 </p>
+            </div>
+        </div>
+
+        <form method="POST" class="p-4 sm:p-5">
+            {% csrf_token %}
+
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+
+                <div>
+                    <label for="first_name" class="text-xs font-medium text-slate-600">
+                        First Name
+                    </label>
+                    <input
+                        id="first_name"
+                        type="text"
+                        name="first_name"
+                        value="{{ request.user.first_name }}"
+                        class="mt-1.5 h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm text-[#07152E] outline-none transition focus:border-[#0B3B8F] focus:ring-2 focus:ring-blue-100"
+                    >
+                </div>
+
+                <div>
+                    <label for="last_name" class="text-xs font-medium text-slate-600">
+                        Last Name
+                    </label>
+                    <input
+                        id="last_name"
+                        type="text"
+                        name="last_name"
+                        value="{{ request.user.last_name }}"
+                        class="mt-1.5 h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm text-[#07152E] outline-none transition focus:border-[#0B3B8F] focus:ring-2 focus:ring-blue-100"
+                    >
+                </div>
+
+                <div>
+                    <label for="username" class="text-xs font-medium text-slate-600">
+                        Username
+                    </label>
+                    <input
+                        id="username"
+                        type="text"
+                        value="{{ request.user.username }}"
+                        disabled
+                        class="mt-1.5 h-11 w-full cursor-not-allowed rounded-lg border border-slate-200 bg-slate-50 px-3 text-sm text-slate-500"
+                    >
+                    <p class="mt-1 text-[10px] text-slate-400">
+                        Your username cannot be changed here.
+                    </p>
+                </div>
+
+                <div>
+                    <label for="email" class="text-xs font-medium text-slate-600">
+                        Email Address
+                    </label>
+                    <input
+                        id="email"
+                        type="email"
+                        value="{{ request.user.email }}"
+                        disabled
+                        class="mt-1.5 h-11 w-full cursor-not-allowed rounded-lg border border-slate-200 bg-slate-50 px-3 text-sm text-slate-500"
+                    >
+                    <p class="mt-1 text-[10px] text-slate-400">
+                        Your email address is read-only.
+                    </p>
+                </div>
 
             </div>
 
-        </div>
-
+            <div class="mt-5 flex justify-end">
+                <button
+                    type="submit"
+                    class="flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-[#0B3B8F] px-5 text-xs font-semibold text-white transition hover:bg-[#124EA8] sm:w-auto sm:text-sm"
+                >
+                    <i data-lucide="save" class="h-4 w-4"></i>
+                    Save Changes
+                </button>
+            </div>
+        </form>
     </div>
 
+    <!-- ACCOUNT AND SECURITY -->
+    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
 
-    <form method="POST" class="p-4 sm:p-5 lg:p-6">
+        <!-- ACCOUNT STATUS -->
+        <div class="soft-card rounded-2xl border border-slate-200 bg-white p-4 sm:p-5">
 
-        {% csrf_token %}
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-
-
-            <!-- FIRST NAME -->
-
-            <div>
-
-                <label
-                    for="first_name"
-                    class="text-[10px] sm:text-xs uppercase tracking-wide text-zinc-500">
-
-                    First Name
-
-                </label>
-
-                <input
-                    id="first_name"
-                    type="text"
-                    name="first_name"
-                    value="{{ request.user.first_name }}"
-                    class="mt-2 w-full h-11 rounded-xl
-                           bg-zinc-950
-                           border border-zinc-800
-                           px-4
-                           text-xs sm:text-sm
-                           outline-none
-                           focus:border-red-600
-                           transition">
-
+            <div class="flex items-center gap-3">
+                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
+                    <i data-lucide="badge-check" class="h-5 w-5"></i>
+                </div>
+                <div>
+                    <h2 class="text-sm font-semibold text-[#07152E] sm:text-base">
+                        Account Status
+                    </h2>
+                    <p class="mt-0.5 text-[11px] text-slate-500">
+                        Your current account information.
+                    </p>
+                </div>
             </div>
 
+            <div class="mt-5 divide-y divide-slate-100">
 
-            <!-- LAST NAME -->
+                <div class="flex items-center justify-between gap-3 py-3">
+                    <span class="text-xs text-slate-500">Status</span>
+                    <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-semibold text-emerald-700">
+                        <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                        Active
+                    </span>
+                </div>
 
-            <div>
+                <div class="flex items-center justify-between gap-3 py-3">
+                    <span class="text-xs text-slate-500">Member Since</span>
+                    <span class="text-xs font-medium text-[#07152E]">
+                        {{ request.user.date_joined|date:"M d, Y" }}
+                    </span>
+                </div>
 
-                <label
-                    for="last_name"
-                    class="text-[10px] sm:text-xs uppercase tracking-wide text-zinc-500">
-
-                    Last Name
-
-                </label>
-
-                <input
-                    id="last_name"
-                    type="text"
-                    name="last_name"
-                    value="{{ request.user.last_name }}"
-                    class="mt-2 w-full h-11 rounded-xl
-                           bg-zinc-950
-                           border border-zinc-800
-                           px-4
-                           text-xs sm:text-sm
-                           outline-none
-                           focus:border-red-600
-                           transition">
+                <div class="flex items-center justify-between gap-3 py-3">
+                    <span class="text-xs text-slate-500">Last Login</span>
+                    <span class="text-xs font-medium text-[#07152E]">
+                        {{ request.user.last_login|date:"M d, Y"|default:"Not available" }}
+                    </span>
+                </div>
 
             </div>
-
-
-            <!-- USERNAME -->
-
-            <div>
-
-                <label
-                    for="username"
-                    class="text-[10px] sm:text-xs uppercase tracking-wide text-zinc-500">
-
-                    Username
-
-                </label>
-
-                <input
-                    id="username"
-                    type="text"
-                    value="{{ request.user.username }}"
-                    disabled
-                    class="mt-2 w-full h-11 rounded-xl
-                           bg-zinc-950/60
-                           border border-zinc-900
-                           px-4
-                           text-xs sm:text-sm
-                           text-zinc-600
-                           cursor-not-allowed">
-
-            </div>
-
-
-            <!-- EMAIL -->
-
-            <div>
-
-                <label
-                    for="email"
-                    class="text-[10px] sm:text-xs uppercase tracking-wide text-zinc-500">
-
-                    Email Address
-
-                </label>
-
-                <input
-                    id="email"
-                    type="email"
-                    value="{{ request.user.email }}"
-                    disabled
-                    class="mt-2 w-full h-11 rounded-xl
-                           bg-zinc-950/60
-                           border border-zinc-900
-                           px-4
-                           text-xs sm:text-sm
-                           text-zinc-600
-                           cursor-not-allowed">
-
-            </div>
-
         </div>
 
+        <!-- SECURITY -->
+        <div class="soft-card rounded-2xl border border-slate-200 bg-white p-4 sm:p-5">
 
-        <div class="flex justify-end mt-5">
-
-            <button
-                type="submit"
-                class="w-full sm:w-auto
-                       h-10 sm:h-11
-                       px-5
-                       rounded-xl
-                       bg-red-600
-                       hover:bg-red-700
-                       transition
-                       flex items-center justify-center gap-2
-                       text-xs sm:text-sm
-                       font-semibold">
-
-                <i data-lucide="save" class="w-4 h-4"></i>
-
-                Save Changes
-
-            </button>
-
-        </div>
-
-    </form>
-
-</div>
-
-
-
-<!-- ================================================= -->
-<!-- ACCOUNT INFORMATION -->
-<!-- ================================================= -->
-
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5">
-
-
-    <!-- ACCOUNT -->
-
-    <div class="glass rounded-2xl border border-zinc-800 p-4 sm:p-5">
-
-        <div class="flex items-center gap-3">
-
-            <div
-                class="w-9 h-9 rounded-xl
-                       bg-zinc-900
-                       flex items-center justify-center">
-
-                <i
-                    data-lucide="badge-check"
-                    class="w-4 h-4 text-green-500">
-                </i>
-
+            <div class="flex items-center gap-3">
+                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-[#0B3B8F]">
+                    <i data-lucide="shield-check" class="h-5 w-5"></i>
+                </div>
+                <div>
+                    <h2 class="text-sm font-semibold text-[#07152E] sm:text-base">
+                        Security
+                    </h2>
+                    <p class="mt-0.5 text-[11px] text-slate-500">
+                        Keep your account protected.
+                    </p>
+                </div>
             </div>
 
-            <div>
-
-                <h2 class="text-sm sm:text-base font-semibold">
-                    Account Status
-                </h2>
-
-                <p class="text-[10px] text-zinc-500 mt-0.5">
-                    Current account information.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div class="space-y-3 mt-5">
-
-            <div class="flex items-center justify-between gap-3">
-
-                <span class="text-xs text-zinc-500">
-                    Status
-                </span>
-
-                <span class="px-2.5 py-1 rounded-full
-                             bg-green-500/10
-                             text-green-500
-                             text-[10px] font-medium">
-
-                    Active
-
-                </span>
-
-            </div>
-
-
-            <div class="flex items-center justify-between gap-3">
-
-                <span class="text-xs text-zinc-500">
-                    Member Since
-                </span>
-
-                <span class="text-xs text-zinc-300">
-                    {{ request.user.date_joined|date:"M d, Y" }}
-                </span>
-
-            </div>
-
-
-            <div class="flex items-center justify-between gap-3">
-
-                <span class="text-xs text-zinc-500">
-                    Last Login
-                </span>
-
-                <span class="text-xs text-zinc-300">
-                    {{ request.user.last_login|date:"M d, Y" }}
-                </span>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- SECURITY -->
-
-    <div class="glass rounded-2xl border border-zinc-800 p-4 sm:p-5">
-
-        <div class="flex items-center gap-3">
-
-            <div
-                class="w-9 h-9 rounded-xl
-                       bg-red-600/10
-                       flex items-center justify-center">
-
-                <i
-                    data-lucide="shield"
-                    class="w-4 h-4 text-red-500">
-                </i>
-
-            </div>
-
-            <div>
-
-                <h2 class="text-sm sm:text-base font-semibold">
-                    Security
-                </h2>
-
-                <p class="text-[10px] text-zinc-500 mt-0.5">
-                    Keep your account protected.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div class="mt-5">
-
-            <div
-                class="flex items-center justify-between gap-3
-                       rounded-xl
-                       bg-zinc-950
-                       border border-zinc-800
-                       p-3.5">
-
-                <div class="flex items-center gap-3 min-w-0">
-
-                    <i
-                        data-lucide="lock-keyhole"
-                        class="w-4 h-4 text-zinc-500 shrink-0">
-                    </i>
-
-                    <div class="min-w-0">
-
-                        <p class="text-xs font-medium">
-                            Password
-                        </p>
-
-                        <p class="text-[10px] text-zinc-600 mt-0.5">
-                            Keep your password private.
-                        </p>
-
+            <div class="mt-5 rounded-xl border border-slate-200 bg-slate-50 p-3.5">
+                <div class="flex items-center gap-3">
+                    <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white text-slate-500 shadow-sm">
+                        <i data-lucide="lock-keyhole" class="h-4 w-4"></i>
                     </div>
 
+                    <div class="min-w-0 flex-1">
+                        <p class="text-xs font-semibold text-[#07152E]">
+                            Password
+                        </p>
+                        <p class="mt-0.5 text-[11px] text-slate-500">
+                            Keep your password private and secure.
+                        </p>
+                    </div>
+
+                    <span class="shrink-0 rounded-md bg-slate-200 px-2 py-1 text-[10px] font-medium text-slate-600">
+                        Protected
+                    </span>
                 </div>
-
-
-                <a
-                    href=""
-                    class="text-[10px] sm:text-xs
-                           text-red-500
-                           hover:text-red-400
-                           font-medium
-                           shrink-0">
-
-                    Change
-
-                </a>
-
             </div>
 
+            <div class="mt-3 flex items-start gap-2.5 rounded-lg border border-blue-100 bg-blue-50/70 p-3">
+                <i data-lucide="info" class="mt-0.5 h-4 w-4 shrink-0 text-[#0B3B8F]"></i>
+                <p class="text-[11px] leading-relaxed text-slate-600">
+                    Never share your password or account credentials. Use a unique password and keep it confidential.
+                </p>
+            </div>
         </div>
 
     </div>
 
-</div>
+    <!-- PREFERENCES -->
+    <div class="soft-card rounded-2xl border border-slate-200 bg-white p-4 sm:p-5">
 
-
-
-<!-- ================================================= -->
-<!-- PREFERENCES -->
-<!-- ================================================= -->
-
-<div class="glass rounded-2xl border border-zinc-800 p-4 sm:p-5 lg:p-6">
-
-    <div class="flex items-center gap-3">
-
-        <div
-            class="w-9 h-9 rounded-xl
-                   bg-zinc-900
-                   flex items-center justify-center">
-
-            <i
-                data-lucide="sliders-horizontal"
-                class="w-4 h-4 text-red-500">
-            </i>
-
+        <div class="flex items-center gap-3">
+            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-[#0B3B8F]">
+                <i data-lucide="sliders-horizontal" class="h-5 w-5"></i>
+            </div>
+            <div>
+                <h2 class="text-sm font-semibold text-[#07152E] sm:text-base">
+                    Preferences
+                </h2>
+                <p class="mt-0.5 text-[11px] text-slate-500 sm:text-xs">
+                    Manage your account update preferences.
+                </p>
+            </div>
         </div>
 
-        <div>
+        <div class="mt-5 space-y-3">
 
-            <h2 class="text-sm sm:text-base font-semibold">
-                Preferences
-            </h2>
-
-            <p class="text-[10px] sm:text-xs text-zinc-500 mt-0.5">
-                Manage how you receive account updates.
-            </p>
-
-        </div>
-
-    </div>
-
-
-    <div class="mt-5 space-y-3">
-
-
-        <div
-            class="flex items-center justify-between gap-4
-                   rounded-xl
-                   border border-zinc-800
-                   bg-zinc-950/50
-                   p-3.5">
-
-            <div class="flex items-center gap-3 min-w-0">
-
-                <i
-                    data-lucide="mail"
-                    class="w-4 h-4 text-zinc-500 shrink-0">
-                </i>
-
-                <div>
-
-                    <p class="text-xs sm:text-sm font-medium">
-                        Email Notifications
-                    </p>
-
-                    <p class="text-[10px] sm:text-xs text-zinc-600 mt-0.5">
-                        Receive important account updates.
-                    </p>
-
+            <div class="flex items-center justify-between gap-4 rounded-xl border border-slate-200 p-3.5">
+                <div class="flex min-w-0 items-center gap-3">
+                    <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-50 text-slate-500">
+                        <i data-lucide="mail" class="h-4 w-4"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-xs font-semibold text-[#07152E] sm:text-sm">
+                            Email Notifications
+                        </p>
+                        <p class="mt-0.5 text-[11px] text-slate-500">
+                            Receive important account updates.
+                        </p>
+                    </div>
                 </div>
 
-            </div>
-
-
-            <span
-                class="w-9 h-5 rounded-full
-                       bg-red-600
-                       relative
-                       shrink-0">
-
-                <span
-                    class="absolute
-                           top-0.5 right-0.5
-                           w-4 h-4
-                           rounded-full
-                           bg-white">
+                <span class="shrink-0 rounded-full bg-blue-50 px-2.5 py-1 text-[10px] font-medium text-[#0B3B8F]">
+                    Preference
                 </span>
-
-            </span>
-
-        </div>
-
-
-        <div
-            class="flex items-center justify-between gap-4
-                   rounded-xl
-                   border border-zinc-800
-                   bg-zinc-950/50
-                   p-3.5">
-
-            <div class="flex items-center gap-3 min-w-0">
-
-                <i
-                    data-lucide="bell"
-                    class="w-4 h-4 text-zinc-500 shrink-0">
-                </i>
-
-                <div>
-
-                    <p class="text-xs sm:text-sm font-medium">
-                        Push Notifications
-                    </p>
-
-                    <p class="text-[10px] sm:text-xs text-zinc-600 mt-0.5">
-                        Receive notifications about account activity.
-                    </p>
-
-                </div>
-
             </div>
 
+            <div class="flex items-center justify-between gap-4 rounded-xl border border-slate-200 p-3.5">
+                <div class="flex min-w-0 items-center gap-3">
+                    <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-50 text-slate-500">
+                        <i data-lucide="bell" class="h-4 w-4"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-xs font-semibold text-[#07152E] sm:text-sm">
+                            Push Notifications
+                        </p>
+                        <p class="mt-0.5 text-[11px] text-slate-500">
+                            Stay informed about account activity.
+                        </p>
+                    </div>
+                </div>
 
-            <span
-                class="w-9 h-5 rounded-full
-                       bg-red-600
-                       relative
-                       shrink-0">
-
-                <span
-                    class="absolute
-                           top-0.5 right-0.5
-                           w-4 h-4
-                           rounded-full
-                           bg-white">
+                <span class="shrink-0 rounded-full bg-blue-50 px-2.5 py-1 text-[10px] font-medium text-[#0B3B8F]">
+                    Preference
                 </span>
-
-            </span>
+            </div>
 
         </div>
 
+        <p class="mt-3 text-[10px] leading-relaxed text-slate-400">
+            Notification preferences are displayed for reference. Changing them requires notification settings to be connected to your backend.
+        </p>
     </div>
 
-</div>
+    <!-- ACCOUNT SECURITY NOTICE -->
+    <div class="rounded-xl border border-red-100 bg-red-50/60 p-4 sm:p-5">
+        <div class="flex items-start gap-3">
+            <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white text-[#E53935]">
+                <i data-lucide="shield-alert" class="h-4 w-4"></i>
+            </div>
 
-
-
-<!-- ================================================= -->
-<!-- DANGER ZONE -->
-<!-- ================================================= -->
-
-<div class="rounded-2xl border border-red-900/30 bg-red-950/5 p-4 sm:p-5">
-
-    <div class="flex items-start gap-3">
-
-        <div
-            class="w-9 h-9 shrink-0
-                   rounded-xl
-                   bg-red-600/10
-                   flex items-center justify-center">
-
-            <i
-                data-lucide="triangle-alert"
-                class="w-4 h-4 text-red-500">
-            </i>
-
+            <div class="min-w-0">
+                <h2 class="text-sm font-semibold text-[#07152E]">
+                    Account Security
+                </h2>
+                <p class="mt-1 text-xs leading-relaxed text-slate-600">
+                    Never share your password, recovery phrases or private keys with anyone claiming to represent Stock Market Investment support.
+                </p>
+            </div>
         </div>
-
-
-        <div class="min-w-0">
-
-            <h2 class="text-sm font-semibold text-red-500">
-                Account Security
-            </h2>
-
-            <p class="text-[11px] sm:text-xs text-zinc-500 mt-1 leading-relaxed">
-                Never share your password, wallet recovery phrase or private keys with anyone, including XCoin support.
-            </p>
-
-        </div>
-
     </div>
-
-</div>
-
 
 </section>
 

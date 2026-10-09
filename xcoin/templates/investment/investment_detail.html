@@ -1,499 +1,450 @@
 {% extends "base.html" %}
 
-
 {% block title %}
 Investment Details
 {% endblock %}
 
-
-
-
 {% block content %}
 
+<div class="max-w-5xl mx-auto">
 
 
-<div class="max-w-5xl mx-auto px-4 sm:px-6 py-10">
+    <!-- ====================================================== -->
+    <!-- HEADER -->
+    <!-- ====================================================== -->
+
+    <section
+        class="relative overflow-hidden rounded-2xl bg-[#0B3B8F] px-5 py-6 sm:px-7">
+
+        <div class="absolute -right-16 -top-20 w-52 h-52 rounded-full bg-white/10 blur-3xl"></div>
+
+        <div class="absolute right-24 -bottom-20 w-40 h-40 rounded-full bg-[#E53935]/20 blur-3xl"></div>
+
+        <div class="relative flex items-center gap-3.5">
+
+            <div class="h-11 w-11 shrink-0 rounded-xl bg-white flex items-center justify-center">
+
+                <i
+                    data-lucide="chart-no-axes-combined"
+                    class="w-5 h-5 text-[#0B3B8F]">
+                </i>
+
+            </div>
+
+            <div>
+
+                <div class="flex items-center gap-2 mb-1">
+
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#E53935]"></span>
+
+                    <p class="uppercase tracking-[.14em] text-[8px] font-bold text-blue-100">
+                        Investment Overview
+                    </p>
+
+                </div>
+
+                <h1 class="text-lg sm:text-xl font-bold text-white">
+                    {{ investment.plan.name }}
+                </h1>
+
+            </div>
+
+        </div>
+
+    </section>
 
 
+    <!-- ====================================================== -->
+    <!-- SUMMARY -->
+    <!-- ====================================================== -->
+
+    <section class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4">
 
 
+        <!-- Invested Amount -->
 
-<!-- HEADER -->
+        <div class="soft-card rounded-xl p-4">
 
-<div class="bg-primary text-white rounded-2xl p-8 shadow-lg">
+            <div class="flex items-start justify-between">
+
+                <div>
+
+                    <p class="text-[9px] uppercase tracking-wider font-semibold text-[#8995A7]">
+                        Invested Amount
+                    </p>
+
+                    <h2 class="text-xl font-bold tracking-tight text-[#07152E] mt-2">
+                        ${{ investment.amount }}
+                    </h2>
+
+                </div>
+
+                <div class="h-8 w-8 rounded-lg bg-[#EAF1FB] flex items-center justify-center">
+
+                    <i
+                        data-lucide="wallet"
+                        class="w-3.5 h-3.5 text-[#0B3B8F]">
+                    </i>
+
+                </div>
+
+            </div>
+
+        </div>
 
 
-<div class="flex items-center gap-4">
+        <!-- Expected Profit -->
+
+        <div class="soft-card rounded-xl p-4">
+
+            <div class="flex items-start justify-between">
+
+                <div>
+
+                    <p class="text-[9px] uppercase tracking-wider font-semibold text-[#8995A7]">
+                        Expected Profit
+                    </p>
+
+                    <h2 class="text-xl font-bold tracking-tight text-emerald-600 mt-2">
+                        ${{ investment.expected_profit }}
+                    </h2>
+
+                </div>
+
+                <div class="h-8 w-8 rounded-lg bg-emerald-50 flex items-center justify-center">
+
+                    <i
+                        data-lucide="trending-up"
+                        class="w-3.5 h-3.5 text-emerald-600">
+                    </i>
+
+                </div>
+
+            </div>
+
+        </div>
 
 
-<div class="bg-white text-primary p-4 rounded-xl">
+        <!-- ROI -->
+
+        <div class="soft-card rounded-xl p-4">
+
+            <div class="flex items-start justify-between">
+
+                <div>
+
+                    <p class="text-[9px] uppercase tracking-wider font-semibold text-[#8995A7]">
+                        Return on Investment
+                    </p>
+
+                    <h2 class="text-xl font-bold tracking-tight text-[#0B3B8F] mt-2">
+                        {{ investment.plan.roi_percent }}%
+                    </h2>
+
+                </div>
+
+                <div class="h-8 w-8 rounded-lg bg-red-50 flex items-center justify-center">
+
+                    <i
+                        data-lucide="percent"
+                        class="w-3.5 h-3.5 text-[#E53935]">
+                    </i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
 
 
-<i data-lucide="chart-no-axes-combined" class="w-8 h-8"></i>
+    <!-- ====================================================== -->
+    <!-- DETAILS -->
+    <!-- ====================================================== -->
 
+    <section class="soft-card rounded-xl mt-4 overflow-hidden">
+
+
+        <div class="px-5 py-4 border-b border-[#E5EAF1]">
+
+            <div class="flex items-center gap-2.5">
+
+                <div class="h-8 w-8 rounded-lg bg-[#EAF1FB] flex items-center justify-center">
+
+                    <i
+                        data-lucide="file-text"
+                        class="w-4 h-4 text-[#0B3B8F]">
+                    </i>
+
+                </div>
+
+                <div>
+
+                    <h2 class="text-[12px] font-bold text-[#07152E]">
+                        Investment Details
+                    </h2>
+
+                    <p class="text-[9px] text-[#8995A7] mt-0.5">
+                        Current investment information
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="grid md:grid-cols-2">
+
+
+            <!-- Start Date -->
+
+            <div class="flex items-center justify-between gap-4 px-5 py-4 border-b md:border-r border-[#EEF1F5]">
+
+                <span class="text-[10px] text-[#718096] flex items-center gap-2">
+
+                    <i
+                        data-lucide="calendar"
+                        class="w-3.5 h-3.5 text-[#0B3B8F]">
+                    </i>
+
+                    Start Date
+
+                </span>
+
+                <strong class="text-[10px] text-[#07152E]">
+                    {{ investment.start_date|date:"M d, Y" }}
+                </strong>
+
+            </div>
+
+
+            <!-- End Date -->
+
+            <div class="flex items-center justify-between gap-4 px-5 py-4 border-b border-[#EEF1F5]">
+
+                <span class="text-[10px] text-[#718096] flex items-center gap-2">
+
+                    <i
+                        data-lucide="calendar-check"
+                        class="w-3.5 h-3.5 text-[#0B3B8F]">
+                    </i>
+
+                    End Date
+
+                </span>
+
+                <strong class="text-[10px] text-[#07152E]">
+                    {{ investment.end_date|date:"M d, Y" }}
+                </strong>
+
+            </div>
+
+
+            <!-- Duration -->
+
+            <div class="flex items-center justify-between gap-4 px-5 py-4 border-b md:border-r border-[#EEF1F5]">
+
+                <span class="text-[10px] text-[#718096] flex items-center gap-2">
+
+                    <i
+                        data-lucide="clock"
+                        class="w-3.5 h-3.5 text-[#0B3B8F]">
+                    </i>
+
+                    Duration
+
+                </span>
+
+                <strong class="text-[10px] text-[#07152E]">
+                    {{ investment.plan.duration_days }} Days
+                </strong>
+
+            </div>
+
+
+            <!-- Status -->
+
+            <div class="flex items-center justify-between gap-4 px-5 py-4 border-b border-[#EEF1F5]">
+
+                <span class="text-[10px] text-[#718096] flex items-center gap-2">
+
+                    <i
+                        data-lucide="activity"
+                        class="w-3.5 h-3.5 text-[#0B3B8F]">
+                    </i>
+
+                    Status
+
+                </span>
+
+
+                {% if investment.status == "running" %}
+
+                <span class="inline-flex items-center gap-1.5 bg-[#EAF1FB] text-[#0B3B8F] px-2.5 py-1 rounded-md text-[9px] font-semibold">
+
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#0B3B8F]"></span>
+
+                    Running
+
+                </span>
+
+
+                {% elif investment.status == "completed" %}
+
+                <span class="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-md text-[9px] font-semibold">
+
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+
+                    Completed
+
+                </span>
+
+
+                {% else %}
+
+                <span class="inline-flex items-center gap-1.5 bg-red-50 text-[#D92D2D] px-2.5 py-1 rounded-md text-[9px] font-semibold">
+
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#E53935]"></span>
+
+                    Cancelled
+
+                </span>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ====================================================== -->
+    <!-- TIMELINE -->
+    <!-- ====================================================== -->
+
+    <section class="soft-card rounded-xl p-5 mt-4">
+
+        <div class="flex items-center gap-2.5 mb-5">
+
+            <div class="h-8 w-8 rounded-lg bg-[#EAF1FB] flex items-center justify-center">
+
+                <i
+                    data-lucide="route"
+                    class="w-4 h-4 text-[#0B3B8F]">
+                </i>
+
+            </div>
+
+            <div>
+
+                <h2 class="text-[12px] font-bold text-[#07152E]">
+                    Investment Timeline
+                </h2>
+
+                <p class="text-[9px] text-[#8995A7] mt-0.5">
+                    Track your investment progress
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="relative ml-1">
+
+
+            <!-- Connecting line -->
+
+            <div class="absolute left-[7px] top-2 bottom-2 w-px bg-[#DCE4EF]"></div>
+
+
+            <!-- Investment Started -->
+
+            <div class="relative flex gap-3 pb-5">
+
+                <div class="relative z-10 w-[15px] h-[15px] rounded-full bg-[#0B3B8F] border-[3px] border-white shadow-sm shrink-0"></div>
+
+                <div class="pt-[-2px]">
+
+                    <div class="flex flex-wrap items-center gap-2">
+
+                        <h3 class="text-[10px] font-semibold text-[#07152E]">
+                            Investment Started
+                        </h3>
+
+                        <span class="bg-[#EAF1FB] text-[#0B3B8F] text-[8px] px-1.5 py-0.5 rounded">
+                            Started
+                        </span>
+
+                    </div>
+
+                    <p class="text-[9px] text-[#8995A7] mt-1">
+                        {{ investment.start_date|date:"M d, Y H:i" }}
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            {% if investment.completed_at %}
+
+            <!-- Investment Completed -->
+
+            <div class="relative flex gap-3">
+
+                <div class="relative z-10 w-[15px] h-[15px] rounded-full bg-emerald-500 border-[3px] border-white shadow-sm shrink-0"></div>
+
+                <div>
+
+                    <div class="flex flex-wrap items-center gap-2">
+
+                        <h3 class="text-[10px] font-semibold text-[#07152E]">
+                            Investment Completed
+                        </h3>
+
+                        <span class="bg-emerald-50 text-emerald-700 text-[8px] px-1.5 py-0.5 rounded">
+                            Completed
+                        </span>
+
+                    </div>
+
+                    <p class="text-[9px] text-[#8995A7] mt-1">
+                        {{ investment.completed_at|date:"M d, Y H:i" }}
+                    </p>
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+
+    <!-- ====================================================== -->
+    <!-- BACK BUTTON -->
+    <!-- ====================================================== -->
+
+    <a
+        href="{% url 'my_investments' %}"
+        class="inline-flex items-center gap-2 mt-4 text-[10px] font-semibold text-[#0B3B8F] hover:text-[#082F73] transition">
+
+        <i
+            data-lucide="arrow-left"
+            class="w-3.5 h-3.5">
+        </i>
+
+        Back to Investments
+
+    </a>
 
 </div>
-
-
-
-
-<div>
-
-
-<h1 class="text-3xl font-bold">
-
-{{ investment.plan.name }}
-
-</h1>
-
-
-
-<p class="text-blue-100">
-
-Investment Overview
-
-</p>
-
-
-</div>
-
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- SUMMARY -->
-
-
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-
-
-
-
-
-<div class="bg-white shadow rounded-2xl p-6">
-
-
-<p class="text-gray-500">
-
-Invested Amount
-
-</p>
-
-
-<h2 class="text-3xl font-bold text-primary mt-2">
-
-${{ investment.amount }}
-
-</h2>
-
-
-</div>
-
-
-
-
-
-
-<div class="bg-white shadow rounded-2xl p-6">
-
-
-<p class="text-gray-500">
-
-Expected Profit
-
-</p>
-
-
-<h2 class="text-3xl font-bold text-green-600 mt-2">
-
-${{ investment.expected_profit }}
-
-</h2>
-
-
-</div>
-
-
-
-
-
-
-
-<div class="bg-white shadow rounded-2xl p-6">
-
-
-<p class="text-gray-500">
-
-ROI
-
-</p>
-
-
-<h2 class="text-3xl font-bold text-secondary mt-2">
-
-{{ investment.plan.roi_percent }}%
-
-</h2>
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-
-<!-- DETAILS -->
-
-
-<div class="bg-white shadow rounded-2xl p-8 mt-8">
-
-
-
-<h2 class="text-xl font-bold text-primary mb-6">
-
-Investment Details
-
-</h2>
-
-
-
-
-
-<div class="grid md:grid-cols-2 gap-6">
-
-
-
-
-
-
-<div class="flex justify-between border-b pb-3">
-
-
-<span class="text-gray-500 flex gap-2 items-center">
-
-
-<i data-lucide="calendar" class="w-4"></i>
-
-
-Start Date
-
-
-</span>
-
-
-
-<strong>
-
-{{ investment.start_date|date:"M d, Y" }}
-
-</strong>
-
-
-</div>
-
-
-
-
-
-
-
-<div class="flex justify-between border-b pb-3">
-
-
-<span class="text-gray-500 flex gap-2 items-center">
-
-
-<i data-lucide="calendar-check" class="w-4"></i>
-
-
-End Date
-
-
-</span>
-
-
-
-<strong>
-
-{{ investment.end_date|date:"M d, Y" }}
-
-</strong>
-
-
-</div>
-
-
-
-
-
-
-
-<div class="flex justify-between border-b pb-3">
-
-
-<span class="text-gray-500 flex gap-2 items-center">
-
-
-<i data-lucide="clock" class="w-4"></i>
-
-
-Duration
-
-
-</span>
-
-
-
-<strong>
-
-{{ investment.plan.duration_days }} Days
-
-</strong>
-
-
-</div>
-
-
-
-
-
-
-
-<div class="flex justify-between border-b pb-3">
-
-
-<span class="text-gray-500 flex gap-2 items-center">
-
-
-<i data-lucide="activity" class="w-4"></i>
-
-
-Status
-
-
-</span>
-
-
-
-
-
-{% if investment.status == "running" %}
-
-<span class="bg-blue-100 text-primary px-3 py-1 rounded-full">
-
-Running
-
-</span>
-
-
-{% elif investment.status == "completed" %}
-
-
-<span class="bg-green-100 text-green-700 px-3 py-1 rounded-full">
-
-Completed
-
-</span>
-
-
-{% else %}
-
-
-<span class="bg-red-100 text-red-700 px-3 py-1 rounded-full">
-
-Cancelled
-
-</span>
-
-
-{% endif %}
-
-
-
-
-</div>
-
-
-
-
-
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-
-<!-- TIMELINE -->
-
-
-<div class="bg-white shadow rounded-2xl p-8 mt-8">
-
-
-<h2 class="text-xl font-bold text-primary mb-6">
-
-Investment Timeline
-
-</h2>
-
-
-
-
-<div class="space-y-5">
-
-
-
-
-
-<div class="flex gap-4">
-
-
-<div class="bg-primary text-white rounded-full w-10 h-10 flex items-center justify-center">
-
-
-<i data-lucide="check" class="w-5"></i>
-
-
-</div>
-
-
-<div>
-
-
-<h3 class="font-semibold">
-
-Investment Started
-
-</h3>
-
-
-<p class="text-gray-500">
-
-{{ investment.start_date|date:"M d, Y H:i" }}
-
-</p>
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-{% if investment.completed_at %}
-
-
-<div class="flex gap-4">
-
-
-<div class="bg-green-600 text-white rounded-full w-10 h-10 flex items-center justify-center">
-
-
-<i data-lucide="flag" class="w-5"></i>
-
-
-</div>
-
-
-<div>
-
-
-<h3 class="font-semibold">
-
-Investment Completed
-
-</h3>
-
-
-<p class="text-gray-500">
-
-{{ investment.completed_at|date:"M d, Y H:i" }}
-
-</p>
-
-
-</div>
-
-
-</div>
-
-
-{% endif %}
-
-
-
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-
-<!-- BACK BUTTON -->
-
-
-<a href="{% url 'my_investments' %}"
-
-class="inline-flex items-center gap-2 mt-8 text-primary font-semibold">
-
-
-<i data-lucide="arrow-left" class="w-4"></i>
-
-
-Back to Investments
-
-
-</a>
-
-
-
-
-
-</div>
-
-
 
 {% endblock %}

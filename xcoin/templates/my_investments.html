@@ -6,39 +6,46 @@ My Investments
 
 {% block content %}
 
-<section class="p-6">
+<section class="w-full max-w-[1400px] mx-auto space-y-4">
 
-    <!-- Header -->
 
-    <div class="flex flex-col lg:flex-row justify-between lg:items-center gap-6">
+    <!-- ================================================= -->
+    <!-- HEADER -->
+    <!-- ================================================= -->
+
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
 
         <div>
 
-            <p class="uppercase tracking-[0.3em] text-xs text-red-500">
+            <div class="flex items-center gap-2">
 
-                Investment Portfolio
+                <span class="w-1.5 h-1.5 rounded-full bg-[#E53935]"></span>
 
-            </p>
+                <p class="text-[9px] uppercase tracking-[0.16em] font-bold text-[#0B3B8F]">
+                    Investment Portfolio
+                </p>
 
-            <h1 class="text-4xl font-black mt-2">
+            </div>
 
+            <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-[#07152E] mt-1">
                 My Investments
-
             </h1>
 
-            <p class="text-zinc-400 mt-2">
-
-                Monitor all your active and completed investment plans.
-
+            <p class="text-[10px] sm:text-xs text-[#7B8798] mt-1">
+                Monitor your active investments, returns and portfolio performance.
             </p>
 
         </div>
 
-        <a href="{% url 'investment_plans' %}"
 
-           class="h-12 px-6 rounded-xl bg-red-600 hover:bg-red-700 transition flex items-center gap-2">
+        <a
+            href="{% url 'investment_plans' %}"
+            class="inline-flex items-center justify-center gap-2 h-9 px-3.5 rounded-lg bg-[#0B3B8F] hover:bg-[#082F73] text-white text-[10px] font-semibold transition">
 
-            <i data-lucide="plus-circle"></i>
+            <i
+                data-lucide="plus-circle"
+                class="w-3.5 h-3.5">
+            </i>
 
             New Investment
 
@@ -47,71 +54,120 @@ My Investments
     </div>
 
 
+    <!-- ================================================= -->
+    <!-- STATISTICS -->
+    <!-- ================================================= -->
 
-    <!-- Statistics -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
 
-    <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-6 mt-10">
 
-        <div class="glass rounded-3xl border border-zinc-800 p-6">
+        <!-- TOTAL -->
 
-            <p class="text-zinc-500 text-sm">
+        <div class="soft-card rounded-xl p-3.5">
 
-                Total Investments
+            <div class="flex items-center justify-between">
 
-            </p>
+                <p class="text-[9px] uppercase tracking-wider font-semibold text-[#8995A7]">
+                    Total Investments
+                </p>
 
-            <h2 class="text-4xl font-black mt-3">
+                <div class="w-7 h-7 rounded-lg bg-[#EAF1FB] flex items-center justify-center">
 
+                    <i
+                        data-lucide="briefcase-business"
+                        class="w-3.5 h-3.5 text-[#0B3B8F]">
+                    </i>
+
+                </div>
+
+            </div>
+
+            <h2 class="text-lg font-bold text-[#07152E] mt-2">
                 {{ investments.count }}
-
             </h2>
 
         </div>
 
-        <div class="glass rounded-3xl border border-zinc-800 p-6">
 
-            <p class="text-zinc-500 text-sm">
+        <!-- ACTIVE -->
 
-                Active
+        <div class="soft-card rounded-xl p-3.5">
 
-            </p>
+            <div class="flex items-center justify-between">
 
-            <h2 class="text-4xl font-black text-green-500 mt-3">
+                <p class="text-[9px] uppercase tracking-wider font-semibold text-[#8995A7]">
+                    Active
+                </p>
 
+                <div class="w-7 h-7 rounded-lg bg-emerald-50 flex items-center justify-center">
+
+                    <i
+                        data-lucide="activity"
+                        class="w-3.5 h-3.5 text-emerald-600">
+                    </i>
+
+                </div>
+
+            </div>
+
+            <h2 class="text-lg font-bold text-emerald-600 mt-2">
                 {{ active_count }}
-
             </h2>
 
         </div>
 
-        <div class="glass rounded-3xl border border-zinc-800 p-6">
 
-            <p class="text-zinc-500 text-sm">
+        <!-- COMPLETED -->
 
-                Completed
+        <div class="soft-card rounded-xl p-3.5">
 
-            </p>
+            <div class="flex items-center justify-between">
 
-            <h2 class="text-4xl font-black text-blue-500 mt-3">
+                <p class="text-[9px] uppercase tracking-wider font-semibold text-[#8995A7]">
+                    Completed
+                </p>
 
+                <div class="w-7 h-7 rounded-lg bg-[#EAF1FB] flex items-center justify-center">
+
+                    <i
+                        data-lucide="circle-check"
+                        class="w-3.5 h-3.5 text-[#0B3B8F]">
+                    </i>
+
+                </div>
+
+            </div>
+
+            <h2 class="text-lg font-bold text-[#0B3B8F] mt-2">
                 {{ completed_count }}
-
             </h2>
 
         </div>
 
-        <div class="glass rounded-3xl border border-zinc-800 p-6">
 
-            <p class="text-zinc-500 text-sm">
+        <!-- TOTAL INVESTED -->
 
-                Total Invested
+        <div class="col-span-2 lg:col-span-1 soft-card rounded-xl p-3.5">
 
-            </p>
+            <div class="flex items-center justify-between">
 
-            <h2 class="text-3xl font-black mt-3">
+                <p class="text-[9px] uppercase tracking-wider font-semibold text-[#8995A7]">
+                    Total Invested
+                </p>
 
+                <div class="w-7 h-7 rounded-lg bg-red-50 flex items-center justify-center">
+
+                    <i
+                        data-lucide="wallet"
+                        class="w-3.5 h-3.5 text-[#E53935]">
+                    </i>
+
+                </div>
+
+            </div>
+
+            <h2 class="text-lg font-bold text-[#07152E] mt-2">
                 ${{ total_invested }}
-
             </h2>
 
         </div>
@@ -119,84 +175,123 @@ My Investments
     </div>
 
 
+    <!-- ================================================= -->
+    <!-- INVESTMENT HISTORY -->
+    <!-- ================================================= -->
 
-    <!-- Desktop Table -->
+    <div class="soft-card rounded-xl overflow-hidden">
 
-    <div class="glass rounded-3xl border border-zinc-800 overflow-hidden mt-10">
 
-        <div class="px-8 py-6 border-b border-zinc-800">
+        <div class="px-4 py-3.5 border-b border-[#E5EAF1] flex items-center justify-between">
 
-            <h2 class="text-2xl font-bold">
+            <div>
 
-                Investment History
+                <h2 class="text-[11px] font-bold text-[#07152E]">
+                    Investment History
+                </h2>
 
-            </h2>
+                <p class="text-[9px] text-[#8995A7] mt-0.5">
+                    Your investment activity and projected returns
+                </p>
+
+            </div>
+
+            <i
+                data-lucide="list-filter"
+                class="w-4 h-4 text-[#8995A7]">
+            </i>
 
         </div>
+
+
+        <!-- ================================================= -->
+        <!-- DESKTOP TABLE -->
+        <!-- ================================================= -->
 
         <div class="hidden lg:block overflow-x-auto">
 
             <table class="w-full">
 
-                <thead class="bg-zinc-900">
+                <thead>
 
-                    <tr class="text-left text-zinc-500">
+                    <tr class="bg-[#F7F9FC] border-b border-[#E5EAF1] text-left">
 
-                        <th class="p-6">Plan</th>
+                        <th class="px-4 py-3 text-[8px] uppercase tracking-wider font-bold text-[#8995A7]">
+                            Plan
+                        </th>
 
-                        <th>Amount</th>
+                        <th class="px-4 py-3 text-[8px] uppercase tracking-wider font-bold text-[#8995A7]">
+                            Amount
+                        </th>
 
-                        <th>ROI</th>
+                        <th class="px-4 py-3 text-[8px] uppercase tracking-wider font-bold text-[#8995A7]">
+                            ROI
+                        </th>
 
-                        <th>Profit</th>
+                        <th class="px-4 py-3 text-[8px] uppercase tracking-wider font-bold text-[#8995A7]">
+                            Profit
+                        </th>
 
-                        <th>End Date</th>
+                        <th class="px-4 py-3 text-[8px] uppercase tracking-wider font-bold text-[#8995A7]">
+                            End Date
+                        </th>
 
-                        <th>Status</th>
+                        <th class="px-4 py-3 text-[8px] uppercase tracking-wider font-bold text-[#8995A7]">
+                            Status
+                        </th>
 
                     </tr>
 
                 </thead>
 
+
                 <tbody>
 
                 {% for investment in investments %}
 
-                    <tr class="border-t border-zinc-800 hover:bg-zinc-900/40 transition">
+                    <tr class="border-b border-[#EEF1F5] last:border-0 hover:bg-[#F8FAFD] transition">
 
-                        <td class="p-6">
+
+                        <!-- PLAN -->
+
+                        <td class="px-4 py-3.5">
 
                             <div>
 
-                                <h3 class="font-semibold">
-
+                                <h3 class="text-[10px] font-semibold text-[#07152E]">
                                     {{ investment.plan.name }}
-
                                 </h3>
 
-                                <p class="text-zinc-500 text-sm">
-
+                                <p class="text-[8px] text-[#8995A7] mt-0.5">
                                     {{ investment.plan.duration_days }} Days
-
                                 </p>
 
                             </div>
 
                         </td>
 
-                        <td>
 
-                            <strong>
+                        <!-- AMOUNT -->
 
+                        <td class="px-4 py-3.5">
+
+                            <strong class="text-[10px] font-semibold text-[#07152E]">
                                 ${{ investment.amount }}
-
                             </strong>
 
                         </td>
 
-                        <td>
 
-                            <span class="text-green-500 font-semibold">
+                        <!-- ROI -->
+
+                        <td class="px-4 py-3.5">
+
+                            <span class="inline-flex items-center gap-1 text-[9px] font-semibold text-emerald-600">
+
+                                <i
+                                    data-lucide="trending-up"
+                                    class="w-3 h-3">
+                                </i>
 
                                 {{ investment.plan.roi_percent }}%
 
@@ -204,27 +299,36 @@ My Investments
 
                         </td>
 
-                        <td>
 
-                            <strong>
+                        <!-- PROFIT -->
 
+                        <td class="px-4 py-3.5">
+
+                            <strong class="text-[10px] font-semibold text-[#07152E]">
                                 ${{ investment.expected_profit }}
-
                             </strong>
 
                         </td>
 
-                        <td>
+
+                        <!-- END DATE -->
+
+                        <td class="px-4 py-3.5 text-[9px] text-[#566276]">
 
                             {{ investment.end_date|date:"M d, Y" }}
 
                         </td>
 
-                        <td>
+
+                        <!-- STATUS -->
+
+                        <td class="px-4 py-3.5">
 
                             {% if investment.status == "active" %}
 
-                            <span class="px-3 py-1 rounded-full bg-green-500/20 text-green-400 text-xs">
+                            <span class="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-emerald-50 text-emerald-700 text-[8px] font-semibold">
+
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
 
                                 Active
 
@@ -232,7 +336,9 @@ My Investments
 
                             {% elif investment.status == "completed" %}
 
-                            <span class="px-3 py-1 rounded-full bg-blue-500/20 text-blue-400 text-xs">
+                            <span class="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-[#EAF1FB] text-[#0B3B8F] text-[8px] font-semibold">
+
+                                <span class="w-1.5 h-1.5 rounded-full bg-[#0B3B8F]"></span>
 
                                 Completed
 
@@ -240,7 +346,9 @@ My Investments
 
                             {% else %}
 
-                            <span class="px-3 py-1 rounded-full bg-red-500/20 text-red-400 text-xs">
+                            <span class="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-red-50 text-[#D92D2D] text-[8px] font-semibold">
+
+                                <span class="w-1.5 h-1.5 rounded-full bg-[#E53935]"></span>
 
                                 Cancelled
 
@@ -252,13 +360,31 @@ My Investments
 
                     </tr>
 
+
                 {% empty %}
 
                     <tr>
 
-                        <td colspan="6" class="py-16 text-center text-zinc-500">
+                        <td
+                            colspan="6"
+                            class="py-12 text-center">
 
-                            You have not made any investments yet.
+                            <div class="w-9 h-9 mx-auto rounded-lg bg-[#F0F4F9] flex items-center justify-center">
+
+                                <i
+                                    data-lucide="briefcase-business"
+                                    class="w-4 h-4 text-[#8995A7]">
+                                </i>
+
+                            </div>
+
+                            <p class="text-[10px] font-semibold text-[#07152E] mt-3">
+                                No investments yet
+                            </p>
+
+                            <p class="text-[9px] text-[#8995A7] mt-1">
+                                Your investment activity will appear here.
+                            </p>
 
                         </td>
 
@@ -271,54 +397,52 @@ My Investments
             </table>
 
         </div>
-        <!-- Mobile Investment Cards -->
 
-        <div class="lg:hidden p-5 space-y-5">
+
+        <!-- ================================================= -->
+        <!-- MOBILE INVESTMENT CARDS -->
+        <!-- ================================================= -->
+
+        <div class="lg:hidden p-3 space-y-2.5">
 
             {% for investment in investments %}
 
-            <div class="rounded-3xl border border-zinc-800 bg-zinc-900 p-6">
+            <div class="rounded-lg border border-[#E5EAF1] bg-white p-3.5">
 
-                <div class="flex justify-between items-start">
 
-                    <div>
+                <!-- CARD HEADER -->
 
-                        <h3 class="text-xl font-bold">
+                <div class="flex items-start justify-between gap-3">
 
+                    <div class="min-w-0">
+
+                        <h3 class="text-[11px] font-bold text-[#07152E] truncate">
                             {{ investment.plan.name }}
-
                         </h3>
 
-                        <p class="text-zinc-500 mt-1">
-
+                        <p class="text-[8px] text-[#8995A7] mt-0.5">
                             {{ investment.plan.duration_days }} Days
-
                         </p>
 
                     </div>
 
+
                     {% if investment.status == "active" %}
 
-                    <span class="px-3 py-1 rounded-full bg-green-500/20 text-green-400 text-xs">
-
+                    <span class="shrink-0 px-2 py-1 rounded-md bg-emerald-50 text-emerald-700 text-[8px] font-semibold">
                         Active
-
                     </span>
 
                     {% elif investment.status == "completed" %}
 
-                    <span class="px-3 py-1 rounded-full bg-blue-500/20 text-blue-400 text-xs">
-
+                    <span class="shrink-0 px-2 py-1 rounded-md bg-[#EAF1FB] text-[#0B3B8F] text-[8px] font-semibold">
                         Completed
-
                     </span>
 
                     {% else %}
 
-                    <span class="px-3 py-1 rounded-full bg-red-500/20 text-red-400 text-xs">
-
+                    <span class="shrink-0 px-2 py-1 rounded-md bg-red-50 text-[#D92D2D] text-[8px] font-semibold">
                         Cancelled
-
                     </span>
 
                     {% endif %}
@@ -326,69 +450,58 @@ My Investments
                 </div>
 
 
+                <!-- DETAILS -->
 
-                <div class="grid grid-cols-2 gap-5 mt-6">
+                <div class="grid grid-cols-2 gap-x-4 gap-y-3 mt-3 pt-3 border-t border-[#EEF1F5]">
+
 
                     <div>
 
-                        <p class="text-zinc-500 text-sm">
-
+                        <p class="text-[8px] text-[#8995A7]">
                             Amount
-
                         </p>
 
-                        <strong>
-
+                        <strong class="text-[10px] text-[#07152E] block mt-0.5">
                             ${{ investment.amount }}
-
                         </strong>
 
                     </div>
 
+
                     <div>
 
-                        <p class="text-zinc-500 text-sm">
-
+                        <p class="text-[8px] text-[#8995A7]">
                             ROI
-
                         </p>
 
-                        <strong class="text-green-500">
-
+                        <strong class="text-[10px] text-emerald-600 block mt-0.5">
                             {{ investment.plan.roi_percent }}%
-
                         </strong>
 
                     </div>
 
+
                     <div>
 
-                        <p class="text-zinc-500 text-sm">
-
+                        <p class="text-[8px] text-[#8995A7]">
                             Expected Profit
-
                         </p>
 
-                        <strong>
-
+                        <strong class="text-[10px] text-[#07152E] block mt-0.5">
                             ${{ investment.expected_profit }}
-
                         </strong>
 
                     </div>
 
+
                     <div>
 
-                        <p class="text-zinc-500 text-sm">
-
+                        <p class="text-[8px] text-[#8995A7]">
                             Ends
-
                         </p>
 
-                        <strong>
-
+                        <strong class="text-[10px] text-[#07152E] block mt-0.5">
                             {{ investment.end_date|date:"M d, Y" }}
-
                         </strong>
 
                     </div>
@@ -396,35 +509,27 @@ My Investments
                 </div>
 
 
+                <!-- PROGRESS -->
 
-                <!-- Progress -->
+                <div class="mt-3 pt-3 border-t border-[#EEF1F5]">
 
-                <div class="mt-6">
+                    <div class="flex items-center justify-between mb-1.5">
 
-                    <div class="flex justify-between text-sm mb-2">
-
-                        <span class="text-zinc-500">
-
-                            Progress
-
+                        <span class="text-[8px] text-[#8995A7]">
+                            Investment Progress
                         </span>
 
-                        <span>
-
+                        <span class="text-[8px] font-semibold text-[#07152E]">
                             {{ investment.progress|default:0 }}%
-
                         </span>
 
                     </div>
 
-                    <div class="w-full h-2 rounded-full bg-zinc-800 overflow-hidden">
+                    <div class="w-full h-1.5 rounded-full bg-[#E9EDF3] overflow-hidden">
 
                         <div
-
-                        class="h-full bg-red-600 rounded-full"
-
-                        style="width:{{ investment.progress|default:0 }}%">
-
+                            class="h-full bg-[#0B3B8F] rounded-full transition-all"
+                            style="width:{{ investment.progress|default:0 }}%">
                         </div>
 
                     </div>
@@ -433,31 +538,31 @@ My Investments
 
             </div>
 
+
             {% empty %}
 
-            <div class="rounded-3xl border border-zinc-800 bg-zinc-900 p-10 text-center">
+            <div class="rounded-lg border border-[#E5EAF1] bg-white p-8 text-center">
 
-                <i data-lucide="briefcase-business"
+                <div class="w-10 h-10 mx-auto rounded-lg bg-[#F0F4F9] flex items-center justify-center">
 
-                   class="w-16 h-16 mx-auto text-zinc-600"></i>
+                    <i
+                        data-lucide="briefcase-business"
+                        class="w-5 h-5 text-[#8995A7]">
+                    </i>
 
-                <h2 class="text-2xl font-bold mt-6">
+                </div>
 
+                <h2 class="text-[12px] font-bold text-[#07152E] mt-3">
                     No Investments Yet
-
                 </h2>
 
-                <p class="text-zinc-500 mt-3">
-
+                <p class="text-[9px] text-[#8995A7] mt-1.5">
                     Start investing to build your portfolio.
-
                 </p>
 
                 <a
-
-                href="{% url 'investment_plans' %}"
-
-                class="inline-flex mt-6 px-6 h-11 rounded-xl bg-red-600 hover:bg-red-700 items-center justify-center">
+                    href="{% url 'investment_plans' %}"
+                    class="inline-flex mt-4 px-3.5 h-8 rounded-lg bg-[#0B3B8F] hover:bg-[#082F73] text-white items-center justify-center text-[9px] font-semibold">
 
                     Browse Plans
 
@@ -472,55 +577,80 @@ My Investments
     </div>
 
 
+    <!-- ================================================= -->
+    <!-- PORTFOLIO SUMMARY -->
+    <!-- ================================================= -->
 
-    <!-- Portfolio Summary -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
 
-    <div class="grid md:grid-cols-3 gap-6 mt-10">
 
-        <div class="glass rounded-3xl border border-zinc-800 p-6">
+        <!-- ESTIMATED PROFIT -->
 
-            <p class="text-zinc-500 text-sm">
+        <div class="soft-card rounded-xl p-3.5">
 
-                Estimated Profit
+            <div class="flex items-center justify-between">
 
-            </p>
+                <p class="text-[9px] uppercase tracking-wider font-semibold text-[#8995A7]">
+                    Estimated Profit
+                </p>
 
-            <h2 class="text-3xl font-black text-green-500 mt-3">
+                <i
+                    data-lucide="badge-dollar-sign"
+                    class="w-3.5 h-3.5 text-emerald-600">
+                </i>
 
+            </div>
+
+            <h2 class="text-lg font-bold text-emerald-600 mt-2">
                 ${{ total_expected_profit }}
-
             </h2>
 
         </div>
 
-        <div class="glass rounded-3xl border border-zinc-800 p-6">
 
-            <p class="text-zinc-500 text-sm">
+        <!-- AVERAGE ROI -->
 
-                Average ROI
+        <div class="soft-card rounded-xl p-3.5">
 
-            </p>
+            <div class="flex items-center justify-between">
 
-            <h2 class="text-3xl font-black mt-3">
+                <p class="text-[9px] uppercase tracking-wider font-semibold text-[#8995A7]">
+                    Average ROI
+                </p>
 
+                <i
+                    data-lucide="percent"
+                    class="w-3.5 h-3.5 text-[#0B3B8F]">
+                </i>
+
+            </div>
+
+            <h2 class="text-lg font-bold text-[#0B3B8F] mt-2">
                 {{ average_roi }}%
-
             </h2>
 
         </div>
 
-        <div class="glass rounded-3xl border border-zinc-800 p-6">
 
-            <p class="text-zinc-500 text-sm">
+        <!-- PORTFOLIO STATUS -->
 
-                Portfolio Status
+        <div class="soft-card rounded-xl p-3.5">
 
-            </p>
+            <div class="flex items-center justify-between">
 
-            <h2 class="text-3xl font-black text-green-500 mt-3">
+                <p class="text-[9px] uppercase tracking-wider font-semibold text-[#8995A7]">
+                    Portfolio Status
+                </p>
 
+                <i
+                    data-lucide="shield-check"
+                    class="w-3.5 h-3.5 text-emerald-600">
+                </i>
+
+            </div>
+
+            <h2 class="text-lg font-bold text-emerald-600 mt-2">
                 Healthy
-
             </h2>
 
         </div>
@@ -528,40 +658,50 @@ My Investments
     </div>
 
 
-
-    <!-- Pagination -->
+    <!-- ================================================= -->
+    <!-- PAGINATION -->
+    <!-- ================================================= -->
 
     {% if investments.has_other_pages %}
 
-    <div class="flex justify-center mt-12">
+    <div class="flex justify-center pt-1">
 
-        <div class="flex gap-3">
+        <div class="flex items-center gap-1.5">
+
 
             {% if investments.has_previous %}
 
-            <a href="?page={{ investments.previous_page_number }}"
+            <a
+                href="?page={{ investments.previous_page_number }}"
+                class="w-8 h-8 rounded-lg border border-[#E1E6EE] bg-white flex items-center justify-center text-[#566276] hover:border-[#0B3B8F] hover:text-[#0B3B8F] transition">
 
-               class="w-11 h-11 rounded-xl border border-zinc-800 flex items-center justify-center hover:border-red-600">
-
-                ←
+                <i
+                    data-lucide="chevron-left"
+                    class="w-3.5 h-3.5">
+                </i>
 
             </a>
 
             {% endif %}
 
-            <span class="px-6 h-11 rounded-xl bg-red-600 flex items-center font-semibold">
+
+            <span class="px-3 h-8 rounded-lg bg-[#0B3B8F] text-white flex items-center justify-center text-[9px] font-semibold">
 
                 {{ investments.number }}
 
             </span>
 
+
             {% if investments.has_next %}
 
-            <a href="?page={{ investments.next_page_number }}"
+            <a
+                href="?page={{ investments.next_page_number }}"
+                class="w-8 h-8 rounded-lg border border-[#E1E6EE] bg-white flex items-center justify-center text-[#566276] hover:border-[#0B3B8F] hover:text-[#0B3B8F] transition">
 
-               class="w-11 h-11 rounded-xl border border-zinc-800 flex items-center justify-center hover:border-red-600">
-
-                →
+                <i
+                    data-lucide="chevron-right"
+                    class="w-3.5 h-3.5">
+                </i>
 
             </a>
 
